@@ -1,0 +1,19 @@
+{
+  "name": "pweb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adrianRoman24/PWEB.git"
+  },
+  "author": "Adrian Roman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adrianRoman24/PWEB/issues"
+  },
+  "homepage": "https://github.com/adrianRoman24/PWEB#readme"
+}
