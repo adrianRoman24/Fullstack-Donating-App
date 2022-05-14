@@ -1,55 +1,25 @@
+const { log, jwtCheck, authMiddleware } = require("./utils");
+const { database } = require("./database");
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
-const { auth, requiresAuth } = require("express-openid-connect");
-const { expressjwt: jwt } = require('express-jwt');
-const jwks = require('jwks-rsa');
+const { requiresAuth } = require("express-openid-connect");
 const axios = require("axios");
 
 const config = require("../config/config.json");
-
-function log(toLog, type="LOG") {
-    let string = null;
-    if (typeof(toLog) === "object") {
-        string = JSON.stringify(toLog);
-    } else {
-        string = toLog;
-    }
-    console.log(`[${new Date().toISOString()}] [${type}] ${string.toString()}`);
-}
-
 log(config)
 
-var jwtCheck = jwt({
-    secret: jwks.expressJwtSecret({
-        cache: true,
-        rateLimit: true,
-        jwksRequestsPerMinute: 5,
-        jwksUri: 'https://dev-sqqag002.us.auth0.com/.well-known/jwks.json'
-  }),
-  audience: config.BASE_URL,
-  issuer: config.ISSUER_BASE_URL,
-  algorithms: ['RS256']
-});
-
 async function main() {
+    // initialize database object ---------------------------------------------
+    await database.initAsync();
+
+    // use middlewares ---------------------------------------
     // auth router attaches /login, /logout, and /callback routes to the baseURL
-    app.use(auth({
-        authRequired: true,
-        auth0Logout: true,
-        secret: config.SECRET,
-        baseURL: config.BASE_URL,
-        clientID: config.CLIENT_ID,
-        issuerBaseURL: config.ISSUER_BASE_URL,
-        clientSecret: config.CLIENT_SECRET,
-        authorizationParams: {
-            response_type: "code",
-            audience: config.BASE_URL,
-            scope: "openid profile email"
-        }
-    }));
+    app.use(authMiddleware);
     app.use(bodyParser.json());
     
+    // define routes ----------------------------------------------------
     // req.isAuthenticated is provided from the auth router
     app.get('/', (req, res) => {
         res.send({
@@ -90,9 +60,9 @@ async function main() {
         });
     });
 
-    const port = config.PORT || 3000;
-    app.listen(port, () => {
-        log(`Listening on port ${port}`);
+    // listen on port 3000
+    app.listen(config.SERVER_PORT, () => {
+        log(`Listening on port ${config.SERVER_PORT}`);
     });
 }
 

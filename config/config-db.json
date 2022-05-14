@@ -1,0 +1,12 @@
+{
+    "HOST": "localhost",
+    "USER": "root",
+    "PASSWORD": "password123456789-",
+    "PORT": 6603,
+    "DATABASE": "pweb",
+    "DIALECT": "mysql",
+    "POOL_MAX": 10,
+    "POOL_MIN": 0,
+    "POOL_ACQUIRE": 30000,
+    "POOL_IDLE": 10000
+}
