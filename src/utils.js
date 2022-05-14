@@ -11,7 +11,7 @@ const log = (toLog, type="LOG") => {
     } else {
         string = toLog;
     }
-    console.log(`[${new Date().toISOString()}] [${type}] ${string.toString()}`);
+    console.log(`[${new Date().toISOString()}] [${type}] ${string}`);
 }
 
 const jwtCheck = jwt({

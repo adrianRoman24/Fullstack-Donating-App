@@ -1,20 +1,30 @@
 module.exports = (sequelize, Sequelize) => {
     return sequelize.define("interaction", {
-        id: {
-            type: type.INTEGER,
-            primaryKey: true,
-            autoIncrement: true
-        },
-        offerId: {
+        refugeeEmail: {
             type: Sequelize.STRING,
             references: {
-                model: 'offer',
+                model: "refugees",
+                key: "email",
+            }
+        },
+        donorEmail: {
+            type: Sequelize.STRING,
+            references: {
+                model: "donors",
+                key: "email",
+            }
+        },
+        offerId: {
+            type: Sequelize.INTEGER,
+            references: {
+                model: 'offers',
                 key: 'id',
             }
         },
         requestId: {
+            type: Sequelize.INTEGER,
             references: {
-                model: 'request',
+                model: 'requests',
                 key: 'id',
             }
         }

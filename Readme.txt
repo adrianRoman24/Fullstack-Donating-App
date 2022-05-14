@@ -6,6 +6,7 @@ RUN DATABASE
 -e MYSQL_ROOT_PASSWORD=password123456789- \
 -p 6603:3306 \
 --volume=path-to-file/db-config.cnf:/etc/mysql/conf.d \
+--memory="1g" \
 mysql:8.0.29
 
 2. $ mysql -h localhost -P 6603 --protocol=tcp -u root -p

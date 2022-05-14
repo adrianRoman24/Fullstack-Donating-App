@@ -16,22 +16,87 @@ async function main() {
 
     // use middlewares ---------------------------------------
     // auth router attaches /login, /logout, and /callback routes to the baseURL
-    app.use(authMiddleware);
+    // app.use(authMiddleware);
     app.use(bodyParser.json());
     
     // define routes ----------------------------------------------------
     // req.isAuthenticated is provided from the auth router
     app.get('/', (req, res) => {
         res.send({
+            homepage: "This is homepage",
             isAuthenticated: req.oidc.isAuthenticated(),
             user: req.oidc.user,
         });
+    });
+
+    app.post("/register", async (req, res) => {
+        if (!"accountType" in req.body) {
+            res.status(400);
+            res.send({
+                error: "accountType not found"
+            });
+            return;
+        }
+        if (req.body.accountType === "refugee") {
+            const result = await database.createRefugee(req);
+            res.send(result);
+        } else if (req.body.accountType === "donor") {
+            const result = await database.createDonor(req);
+            res.send(result);
+        } else {
+            res.status(400);
+            res.send({
+                error: "Wrong accountType. Accepted: refugee | donor",
+            });
+        }
+    });
+
+    app.get("/viewProfile", async (req, res) => {
+        log(`View profile: ${JSON.stringify(req.query)}`);
+        if (!"email" in req.query || !"accountType" in req.query) {
+            res.status(400);
+            res.send({
+                error: "email or accountType not found in query params",
+            });
+        }
+        if (req.query.accountType === "refugee") {
+            const result = await database.findRefugee(req);
+            res.send(result);
+        } else if (req.query.accountType === "donor") {
+            const result = await database.findDonor(req);
+            res.send(result);
+        }
+    });
+
+    app.get("/viewOffers", async (req, res) => {
+        log(`View offers: ${JSON.stringify(req.query)}`);
+        if (!"offset" in req.query) {
+            res.status(400);
+            res.send({
+                error: "offset not found in query params",
+            });
+        }
+        const result = await database.getOffers(req);
+        res.send(result);
+    });
+
+    app.get("/viewHistory", async (req, res) => {
+        log(`Get History: ${JSON.stringify(req.query)}`);
+        if (!"email" in req.query || !"accountType" in req.query) {
+            res.status(400);
+            res.send({
+                error: "email or accountType not found in query params",
+            });
+        }
+        const result = await database.getHistory(req);
+        res.send(result);
     });
 
     app.get("/secure", requiresAuth(), async (req, res) => {
         let data = {};
         try {
             const { token_type, access_token } = req.oidc.accessToken;
+            console.log(access_token)
             const apiResponse = await axios.get("http://localhost:3000/private", {
                 headers: {
                     authorization: `${token_type} ${access_token}`,

@@ -1,19 +1,20 @@
 module.exports = (sequelize, Sequelize) => {
     return sequelize.define("offer", {
         id: {
-            type: type.INTEGER,
+            type: Sequelize.INTEGER,
             primaryKey: true,
-            autoIncrement: true
         },
-        refugeeId: {
+        location: Sequelize.STRING,
+        donorEmail: {
             type: Sequelize.STRING,
             references: {
-                model: 'refugee',
+                model: 'donors',
                 key: 'email',
-            }
+            },
         },
+        type: Sequelize.STRING,
         description: Sequelize.STRING,
-        count: Sequelize.DECIMAL,
+        capacity: Sequelize.DECIMAL,
         date: Sequelize.DATE,
     });
 }

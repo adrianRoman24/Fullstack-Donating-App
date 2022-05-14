@@ -8,5 +8,6 @@
     "POOL_MAX": 10,
     "POOL_MIN": 0,
     "POOL_ACQUIRE": 30000,
-    "POOL_IDLE": 10000
+    "POOL_IDLE": 10000,
+    "QUERY_LIMIT": 20
 }
