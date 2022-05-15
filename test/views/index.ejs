@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+        <link rel="stylesheet" href="/stylesheet/style.css" />
+    </head>
+    <body>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/secured">Secure</a></li>
+                <% if (!isAuthenticated) { %>
+                <li><a href="/login/">Login</a></li>
+                <% } else { %>
+                <li><a href="/logout/">Logout</a></li>
+                <% } %>
+            </ul>
+        </nav>
+        <h1><%= title %></h1>
+        <p>Welcome to <%= title %></p>
+    </body>
+</html>

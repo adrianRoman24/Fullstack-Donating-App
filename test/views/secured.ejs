@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+        <link rel="stylesheet" href="/stylesheet/style.css" />
+    </head>
+    <body>
+        <nav>
+            <ul>
+                <% if (!isAuthenticated) { %>
+                <li><a href="/login">Login</a></li>
+                <% } else { %>
+                <li><a href="/logout">Logout</a></li>
+                <% } %>
+            </ul>
+        </nav>
+        <h1><%= title %></h1>
+        <p>Welcome to <%= title %></p>
+        <!-- <pre><%= JSON.stringify(user, null, 2)%></pre> -->
+        <% if (user) { %>
+            <div class="profileInfo">
+                <img src="<%= user.picture %>"/>
+                <p class="name">
+                    <%= user.nickname.charAt(0).toUpperCase() + user.nickname.slice(1) %>
+                </p>
+            </div>
+        <% } %>
+        <pre><%= JSON.stringify(user, null, 2)%></pre>
+        <pre><%= JSON.stringify(data, null, 2)%></pre>
+        <pre><%= JSON.stringify(access_token, null, 2)%></pre>
+    </body>
+</html>
