@@ -58,6 +58,7 @@ async function main() {
             res.send({
                 error: "email or accountType not found in query params",
             });
+            return;
         }
         if (req.query.accountType === "refugee") {
             const result = await database.findRefugee(req);
@@ -75,6 +76,7 @@ async function main() {
             res.send({
                 error: "offset not found in query params",
             });
+            return;
         }
         const result = await database.getOffers(req);
         res.send(result);
@@ -87,8 +89,36 @@ async function main() {
             res.send({
                 error: "email or accountType not found in query params",
             });
+            return;
         }
         const result = await database.getHistory(req);
+        res.send(result);
+    });
+
+    app.get("/myRequests", async (req, res) => {
+        log(`My Requests: ${JSON.stringify(req.query)}`);
+        if (!"email" in req.query) {
+            req.status(400);
+            res.send({
+                error: "email not found in query params",
+            });
+            return;
+        }
+        const result = await database.getRequests(req);
+        res.send(result);
+    });
+
+    app.post("/makeRequest", async (req, res) => {
+        log(`Make Request: ${JSON.stringify(req.query)}`);
+        if (!"offerId" in req.body || !"refugeeEmail" in req.body || !"description" in req.body
+            || !"count" in req.body || !"date" in req.body) {
+            req.status(400);
+            res.send({
+                error: "Wrong body. Body must contain: offerId, refugeeEmail, description, count, date",
+            });
+            return;
+        }
+        const result = await database.makeRequest(req);
         res.send(result);
     });
 

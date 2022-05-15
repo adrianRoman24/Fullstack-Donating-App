@@ -157,6 +157,47 @@ class Database {
         }
     }
 
+    // requests helpers
+    getRequests = async (req) => {
+        try {
+            const found = await this.Request.findAll({
+                where: {
+                    refugeeEmail: req.query.email,
+                },
+            });
+            return {
+                result: "success",
+                requests: found,
+            }
+        } catch (error) {
+            log(`Could not find requests: ${error}`, "ERROR");
+            return {
+                error
+            };
+        }
+    }
+
+    makeRequest = async(req) => {
+        try {
+            const created = await this.Request.create({
+                offerId: req.body.offerId,
+                refugeeEmail: req.body.refugeeEmail,
+                description: req.body.description,
+                count: req.body.count,
+                date: new Date(req.body.date),
+            });
+            return {
+                result: "success",
+                request: created,
+            }
+        } catch (error) {
+            log(`Could not make request: ${error}`, "ERROR");
+            return {
+                error,
+            };
+        }
+    }
+
     // interactions helpers
     getHistory = async (req) => {
         try {
