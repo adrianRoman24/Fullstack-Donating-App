@@ -29,5 +29,6 @@ module.exports = (sequelize, Sequelize) => {
         description: Sequelize.STRING,
         count: Sequelize.INTEGER,
         date: Sequelize.DATE,
+        status: Sequelize.STRING,
     });
 }

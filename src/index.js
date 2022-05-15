@@ -160,6 +160,18 @@ async function main() {
         res.send(result);
     });
 
+    app.put("/acceptRejectRequest", async (req, res) => {
+        log(`Accept or Reject request`);
+        if (!"requestId" in req.body || !"accept" in req.body) {
+            res.status(400);
+            res.send({
+                error: "requestId or accept not found in body",
+            });
+        }
+        const result = await database.acceptRejectRequest(req);
+        res.send(result);
+    });
+
     app.get("/secure", requiresAuth(), async (req, res) => {
         let data = {};
         try {

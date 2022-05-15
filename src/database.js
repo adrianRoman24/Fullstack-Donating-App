@@ -223,6 +223,7 @@ class Database {
             const found = await this.Request.findAll({
                 where: {
                     donorEmail: req.query.donorEmail,
+                    status: "pending",
                 }
             });
             return {
@@ -246,6 +247,7 @@ class Database {
                 description: req.body.description,
                 count: req.body.count,
                 date: new Date(req.body.date),
+                status: "pending",
             });
             return {
                 result: "success",
@@ -307,7 +309,62 @@ class Database {
         } catch (error) {
             log(`Could not get History: ${error}`, "ERROR");
             return {
-                error
+                error,
+            };
+        }
+    }
+
+
+    acceptRejectRequest = async (req) => {
+        try {
+            if (req.body.accept === true) {
+                // find request
+                const request = await this.Request.findOne({
+                    where: {
+                        id: req.body.requestId,
+                    },
+                });
+                // update offer
+                const offer = await this.Offer.findOne({
+                    where: {
+                        id: request.offerId,
+                    },
+                })
+                const offerUpdated = await offer.update({
+                    capacity: offer.capacity - request.count,
+                });
+                // create interaction
+                const interactionCreated = await this.Interaction.create({
+                    refugeeEmail: request.refugeeEmail,
+                    donorEmail: request.donorEmail,
+                    offerId: request.offerId,
+                    requestId: req.body.requestId,
+                });
+                // update request status
+                const updated = await request.update({
+                    status: "accepted",
+                });
+                return {
+                    result: "success",
+                    request: updated,
+                    interaction: interactionCreated,
+                }
+            } else {
+                const updated = await this.Request.update({
+                    status: "rejected",
+                    where: {
+                        id: req.body.requestId,
+                    }
+                });
+                return {
+                    result: "success",
+                    request: updated,
+                }
+            }
+        } catch (error) {
+            log(`Could not accept request: ${error}`, "ERROR");
+            return {
+                error,
             };
         }
     }
