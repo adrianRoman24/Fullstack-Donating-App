@@ -50,7 +50,7 @@ class Database {
                 sex: req.body.sex,
                 rating: 0,
                 personalInformation: req.body.personalInformation,
-                lookingFor: req.body.personalInformation,
+                lookingFor: req.body.lookingFor,
                 votes: 0,
                 phone: req.body.phone,
                 address: req.body.address,
@@ -147,7 +147,7 @@ class Database {
             return {
                 result: "success",
                 offers: found,
-                offset: req.query.offset + dbConfig.QUERY_LIMIT,
+                offset: parseInt(req.query.offset) + dbConfig.QUERY_LIMIT,
             }
         } catch (error) {
             log(`Could not find offers: ${error}`, "ERROR");
@@ -179,6 +179,25 @@ class Database {
         }
     }
 
+    myOffers = async (req) => {
+        try {
+            const found = await this.Offer.findAll({
+                where: {
+                    donorEmail: req.query.donorEmail,
+                }
+            });
+            return {
+                result: "success",
+                offers: found,
+            }
+        } catch (error) {
+            log(`Could not get my offers: ${error}`, "ERROR");
+            return {
+                error,
+            };
+        }
+    }
+
     // requests helpers
     getRequests = async (req) => {
         try {
@@ -199,10 +218,30 @@ class Database {
         }
     }
 
+    pendingRequests = async (req) => {
+        try {
+            const found = await this.Request.findAll({
+                where: {
+                    donorEmail: req.query.donorEmail,
+                }
+            });
+            return {
+                result: "success",
+                requests: found,
+            }
+        } catch (error) {
+            log(`Could not find pending requests: ${error}`, "ERROR");
+            return {
+                error
+            };
+        }
+    }
+
     makeRequest = async(req) => {
         try {
             const created = await this.Request.create({
                 offerId: req.body.offerId,
+                donorEmail: req.body.donorEmail,
                 refugeeEmail: req.body.refugeeEmail,
                 description: req.body.description,
                 count: req.body.count,

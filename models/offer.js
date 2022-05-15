@@ -15,7 +15,7 @@ module.exports = (sequelize, Sequelize) => {
         },
         type: Sequelize.STRING,
         description: Sequelize.STRING,
-        capacity: Sequelize.DECIMAL,
+        capacity: Sequelize.INTEGER,
         date: Sequelize.DATE,
     });
 }

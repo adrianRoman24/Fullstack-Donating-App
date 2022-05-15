@@ -108,13 +108,26 @@ async function main() {
         res.send(result);
     });
 
+    app.get("/pendingRequests", async (req, res) => {
+        log(`Pending Requests: ${JSON.stringify(req.query)}`);
+        if (!"donorEmail" in req.query) {
+            req.status(400);
+            res.send({
+                error: "donorEmail not found in query params",
+            });
+            return;
+        }
+        const result = await database.pendingRequests(req);
+        res.send(result);
+    });
+
     app.post("/makeRequest", async (req, res) => {
         log(`Make Request: ${JSON.stringify(req.query)}`);
         if (!"offerId" in req.body || !"refugeeEmail" in req.body || !"description" in req.body
-            || !"count" in req.body || !"date" in req.body) {
+            || !"count" in req.body || !"date" in req.body || !"donorEmail" in req.body) {
             req.status(400);
             res.send({
-                error: "Wrong body. Body must contain: offerId, refugeeEmail, description, count, date",
+                error: "Wrong body. Body must contain: offerId, refugeeEmail, donorEmail, description, count, date",
             });
             return;
         }
@@ -132,6 +145,18 @@ async function main() {
             });
         }
         const result = await database.publishOffer(req);
+        res.send(result);
+    });
+
+    app.get("/myOffers", async (req, res) => {
+        log(`My Offers: ${JSON.stringify(req.query)}`);
+        if (!"donorEmail" in req.query) {
+            req.status(400);
+            res.send({
+                error: "donorEmail not found in query params",
+            });
+        }
+        const result = await database.myOffers(req);
         res.send(result);
     });
 

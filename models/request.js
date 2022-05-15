@@ -19,8 +19,15 @@ module.exports = (sequelize, Sequelize) => {
                 key: 'email',
             }
         },
+        donorEmail: {
+            type: Sequelize.STRING,
+            references: {
+                model: 'donors',
+                key: 'email',
+            },
+        },
         description: Sequelize.STRING,
-        count: Sequelize.DECIMAL,
+        count: Sequelize.INTEGER,
         date: Sequelize.DATE,
     });
 }
