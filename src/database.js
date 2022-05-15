@@ -157,6 +157,28 @@ class Database {
         }
     }
 
+    publishOffer = async (req) => {
+        try {
+            const created = await this.Offer.create({
+                location: req.body.location,
+                donorEmail: req.body.donorEmail,
+                type: req.body.type,
+                description: req.body.description,
+                capacity: req.body.capacity,
+                date: new Date(req.body.date),
+            });
+            return {
+                result: "success",
+                offer: created,
+            }
+        } catch (error) {
+            log(`Could not publish offer: ${error}`, "ERROR");
+            return {
+                error
+            };
+        }
+    }
+
     // requests helpers
     getRequests = async (req) => {
         try {

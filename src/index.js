@@ -122,6 +122,19 @@ async function main() {
         res.send(result);
     });
 
+    app.post("/publishOffer", async (req, res) => {
+        log(`Publish Offer: ${JSON.stringify(req.body)}`);
+        if (!"location" in req.body || !"donorEmail" in req.body || !"type" in req.body
+            || !"description" in req.body || !"capacity" in req.body) {
+            req.status(400);
+            res.send({
+                error: "Wrong body. Body must contain: location, donorEmail, type, description, capacity",
+            });
+        }
+        const result = await database.publishOffer(req);
+        res.send(result);
+    });
+
     app.get("/secure", requiresAuth(), async (req, res) => {
         let data = {};
         try {
