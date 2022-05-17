@@ -14,6 +14,12 @@ router.get("/", (req ,res) => {
 });
 
 router.get("/secured", requiresAuth(), async (req ,res) => {
+    console.log("Token");
+    console.log(req.oidc.accessToken);
+    console.log("Body");
+    console.log(req.body);
+    console.log("Query")
+    console.log(req.query);
     let data = {};
     const { token_type, access_token } = req.oidc.accessToken;
     try {

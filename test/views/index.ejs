@@ -8,6 +8,15 @@
         <nav>
             <ul>
                 <li><a href="/">Home</a></li>
+                <li><a href="https://dev-sqqag002.us.auth0.com/login?
+                    response_type=code&
+                    client_id=LvFx3v6D2W36ucidLMlRtwiHVkjWFxRW&
+                    redirect_uri=http://localhost:3000/callback&  
+                    scope=appointments%20contacts&
+                    audience=appointments:api&
+                    state=xyzABC123">
+                    Sign In
+                  </a></li>
                 <li><a href="/secured">Secure</a></li>
                 <% if (!isAuthenticated) { %>
                 <li><a href="/login/">Login</a></li>
