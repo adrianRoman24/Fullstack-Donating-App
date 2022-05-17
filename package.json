@@ -26,6 +26,7 @@
     "express-openid-connect": "^2.7.2",
     "jwks-rsa": "^2.1.1",
     "mysql2": "^2.3.3",
+    "path": "^0.12.7",
     "sequelize": "^6.19.0"
   }
 }

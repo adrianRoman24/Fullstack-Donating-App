@@ -1,5 +1,6 @@
 const { log, jwtCheck, authMiddleware } = require("./utils");
 const { database } = require("./database");
+const path = require("path");
 
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -18,15 +19,54 @@ async function main() {
     // auth router attaches /login, /logout, and /callback routes to the baseURL
     // app.use(authMiddleware);
     app.use(bodyParser.json());
+    app.use(express.static(path.join(__dirname, '/../public')));
+    app.set('views', __dirname + '/../views');
+    app.engine('html', require('ejs').renderFile);
     
     // define routes ----------------------------------------------------
     // req.isAuthenticated is provided from the auth router
-    app.get('/', (req, res) => {
-        res.send({
-            homepage: "This is homepage",
-            isAuthenticated: req.oidc.isAuthenticated(),
-            user: req.oidc.user,
-        });
+
+    // public route
+    app.get("/homepage", (req, res) => {
+        res.render("homepage.html");
+    });
+
+    // other public routes
+    // ...
+
+    // auth routes
+    app.get("/login", authMiddleware, (req, res) => {
+    });
+
+    app.get('/', authMiddleware, (req, res) => {
+        // TO DO: check account type
+        /*
+        if (account_refugee) {
+            render(refugee_page)
+        } else {
+            render(donor_page)
+        }
+        */
+        console.log(req.oidc.user);
+        console.log(req.oidc.accessToken)
+        console.log(req.oidc.isAuthenticated())
+        res.redirect("/refugee");
+    });
+
+    app.get('/callback', authMiddleware, (req, res) => {
+        res.redirect("/");
+    });
+
+    app.get('/refugee', authMiddleware, (req, res) => {
+        res.render("refugee_homepage.html");
+    });
+
+    app.get('/donor', authMiddleware,  (req, res) => {
+        res.render("donor_homepage.html");
+    });
+
+    app.get("/logout", authMiddleware, (req, res) => {
+        console.log("logout")
     });
 
     app.post("/register", async (req, res) => {

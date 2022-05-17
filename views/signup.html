@@ -1,0 +1,42 @@
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <title>Main menu</title>
+</head>
+<body>
+
+<link rel="stylesheet" href="style/signup.css">
+<div class="wrapper fadeInDown">
+    <div id="formContent" style="background:#c2deec;">
+        <!-- Tabs Titles -->
+      
+        <!-- Icon -->
+        <div class="fadeIn first">
+        </div>
+
+		
+
+<!-- Login Form -->
+<section class="signup-form">
+    <h2><span id="blueColor">Sign Up</span></h2>
+    <form action="includes/signup.inc.php" method="post">
+        <input type="text" name="name" placeholder="Full name...">
+        <input type="text" name="email" placeholder="Email..."><br>
+        <h2><span id="blueColor">Account type:</span></h2><br>
+        <input type="checkbox" id="refugee" name="refugee" value="Refugee">
+        <label for="refugee"> Refugee</label><br>
+        <input type="checkbox" id="donor" name="donor" value="Donor">
+        <label for="donor"> Donor</label><br>
+        <input type="password" name="pwd" placeholder="Password...">
+        <input type="password" name="pwdrepeat" placeholder="Confirm password..."><br>
+        <button type="submit" name="submit" class="btn btn-success btn-sm" id="sign-up-button" style="width:150px;">Create account</button>
+    </form>
+</section>
+		
+
+		

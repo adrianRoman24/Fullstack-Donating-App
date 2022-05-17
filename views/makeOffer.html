@@ -1,0 +1,58 @@
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <title>Main menu</title>
+</head>
+<body>
+
+
+<link rel="stylesheet" href="style/makeOffer.css">
+<div class="wrapper fadeInDown">
+    <div id="formContent" style="background:#c2deec;">
+        <!-- Tabs Titles -->
+      
+        <!-- Icon -->
+        <div class="fadeIn first">
+        </div>
+
+		
+
+<!-- Login Form -->
+<section class="signup-form">
+    <h2><span id="blueColor">Create offer</span></h2>
+    <form action="includes/signup.inc.php" method="post">
+        <h1 style="float: left;">Type:</h1>
+        <input type="text" name="name" placeholder="Type...">
+        <h1 style="float: left;">Count: <span id="demo">0</span></h1>
+        <div class="slidecontainer">
+            <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+        </div>
+        <h1 style="float: left;">Date:</h1>
+        <input style="position:relative; top:20px;" type="date" id="start" name="trip-start"
+            value="2018-07-22"
+            min="2018-01-01" max="2018-12-31">
+        <button type="submit" name="submit" class="btn btn-success btn-sm" id="sign-up-button" style="width:150px; 
+        position: absolute;
+        left:150px;
+        bottom: 4px;">Publish offer</button>
+    </form>
+    
+<script>
+    var slider = document.getElementById("myRange");
+    var output = document.getElementById("demo");
+    output.innerHTML = slider.value; // Display the default slider value
+
+    // Update the current slider value (each time you drag the slider handle)
+    slider.oninput = function() {
+    output.innerHTML = this.value;
+    }
+</script>
+</section>
+		
+
+		
