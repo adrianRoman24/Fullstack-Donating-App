@@ -8,6 +8,17 @@ RUN DATABASE
 --memory="1g" \
 mysql:8.0.29
 
+RUN RABBITMQ ALERTING QUEUE
+
+$ docker run \
+--detach \
+--name=alertingrabbit \
+--hostname=alerting-rabbit \
+-e RABBITMQ_DEFAULT_USER=admin \
+-e RABBITMQ_DEFAULT_PASS=password123456789- \
+-p 5672:5672 \
+rabbitmq:3.9
+
 2. $ mysql -h localhost -P 6603 --protocol=tcp -u root -p
 Enter password: password123456789-
 mysql> CREATE DATABASE pweb;
@@ -19,4 +30,5 @@ RUN SERVER
     8.5.5
     v18.1.0
 1. npm install
-2. npm run start
+2. npm run start_server
+3. npm run sart_alerting_service
