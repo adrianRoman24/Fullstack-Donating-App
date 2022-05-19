@@ -3,13 +3,51 @@
 
 <head >
   <title>First official donating site in Romania</title>
-  <link rel="stylesheet" type="text/css" href="style/style_refugee.css" />
+  <link rel="stylesheet" type="text/css" href="../style/style_refugee.css" />
 </head>
+<script src="../lib/functions.inc.js"></script>
+<script src="https://cdn.auth0.com/js/auth0-spa-js/1.19/auth0-spa-js.production.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+<script>
+// The Auth0 client, initialized in configureClient()
+  let auth0 = null;
+const configureClient = async () => {
+  auth0 = await createAuth0Client({
+    domain: "dev-b9s90wxq.us.auth0.com",
+    client_id: "4UeZo7p9CcBC1xzAX3yqLmRTNLn0igu7"
+  });
+};
 
-<body >
+window.onload = async () => {
+await configureClient();
+
+const isAuthenticated = await auth0.isAuthenticated();
+const usr = await auth0.getUser();
+console.log(usr);
+if (isAuthenticated) {
+  console.log("> User is authenticated");
+  return;
+}
+
+console.log("> User not authenticated");
+const query = window.location.search;
+if (query.includes("code=") && query.includes("state=")) {
+
+  // Process the login state
+  await auth0.handleRedirectCallback();
+
+  // Use replaceState to redirect the user away and remove the querystring parameters
+  window.history.replaceState({}, document.title, "/");
+}
+
+};
+
+</script>
+<body > 
   <div id="main">
     <div id="header" style="background:#7dc2ec;" >
-        <img src="style/3.jpg" style="float:left;width:90px;height:90px; top:30px; left:100px; position:relative; border-radius: 95%;">
+        <img src="../style/3.jpg" style="float:left;width:90px;height:90px; top:30px; left:100px; position:relative; border-radius: 95%;">
       <div  id="logo">
         <div id="logo_text">
           <!-- class="logo_colour", allows you to change the colour of the text -->
@@ -19,14 +57,14 @@
       
           <ul id="menu" >
             <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
-            <li style="float:none; left: 100px; top:100px; position:relative; border-radius: 25%;"><a style="padding: 6px 50px 5px 28px; background:#149CF0; border-radius: 25%;" href="index.html">Pending requests</a></li>
-            <li style="background:#149CF0; float:none; left: 355px; top:240px; position:absolute; border-radius: 25%;"><a style="padding: 6px 100px 5px 28px; background:#149CF0; border-radius: 25%;" href="index.html">Publish offer</a></li>
-            <li style="float:none; left: 100px; top:120px; position:relative; border-radius: 25%;"><a style="padding: 6px 320px 5px 28px; background:#149CF0; background:#149CF0; border-radius: 25%;" href="examples.html">My offers</a></li>
-            <li style="float:none; left: 100px; top:140px; position:relative; border-radius: 25%;"><a style="padding: 6px 320px 5px 28px; background:#149CF0; border-radius: 25%;" href="page.html">History</a></li>
-            <li style="float:none; left: 100px; top:160px; position:relative; border-radius: 25%;"><a style="padding: 6px 100px 5px 28px; background:#149CF0; border-radius: 25%;" href="another_page.html">Homepage</a></li>
-            <li style="float:none; left: 125px; top:160px; position:relative; border-radius: 25%;"><a style="padding: 6px 100px 5px 28px; background:#149CF0; border-radius: 25%;" href="another_page.html">Sign out</a></li>
+            <li style="float:none; left: 100px; top:100px; position:relative; border-radius: 25%;"><a style="padding: 6px 50px 5px 28px; background:#149CF0; border-radius: 25%;" href="/views/request/view">Pending requests</a></li>
+            <li style="background:#149CF0; float:none; left: 355px; top:240px; position:absolute; border-radius: 25%;"><a style="padding: 6px 100px 5px 28px; background:#149CF0; border-radius: 25%;" href="/views/offer/create">Publish offer</a></li>
+            <li style="float:none; left: 100px; top:120px; position:relative; border-radius: 25%;"><a style="padding: 6px 320px 5px 28px; background:#149CF0; background:#149CF0; border-radius: 25%;" href="/views/offer/my_offers">My offers</a></li>
+            <li style="float:none; left: 100px; top:140px; position:relative; border-radius: 25%;"><a style="padding: 6px 320px 5px 28px; background:#149CF0; border-radius: 25%;" href="/views/history/offer_view">History</a></li>
+            <li style="float:none; left: 100px; top:160px; position:relative; border-radius: 25%;"><a style="padding: 6px 100px 5px 28px; background:#149CF0; border-radius: 25%;" href="/views/homepage">Homepage</a></li>
+            <li style="float:none; left: 125px; top:160px; position:relative; border-radius: 25%;"><a style="padding: 6px 100px 5px 28px; background:#149CF0; border-radius: 25%;" onClick="logoutButton(auth0);">Sign out</a></li>
           </ul>
-          <img src="style/4.png" style="float:left;width:300px;height:200px; top:130px; left:300px; position:relative; ">
+          <img src="../style/4.png" style="float:left;width:300px;height:200px; top:130px; left:300px; position:relative; ">
       
     </div>
      <div id="content_header"></div>

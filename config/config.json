@@ -1,10 +1,7 @@
 {
     "SERVER_PORT": 3000,
     "ISSUER_BASE_URL": "https://dev-sqqag002.us.auth0.com",
-    "CLIENT_ID": "UZcKEK1vr9Ql5BXPLk0lVmP3NgvNeGRY",
     "BASE_URL": "http://localhost:3000",
-    "SECRET": "12312312e211drcf32cf234ct32uyr9u9mhjr92v98jwgv9emhcimfuimwecbffhbqjhvgqj",
-    "CLIENT_SECRET": "9BpbVdgOJZ87qe0kYjXuDr9-if6-wFP50j8Qc0oYhbEqKUprIJp3jmk_A3fPRU-A",
     "ALGORITHMS": ["RS256"],
     "JWKS_URI": "https://dev-sqqag002.us.auth0.com/.well-known/jwks.json",
     "JWKS_CACHE": true,

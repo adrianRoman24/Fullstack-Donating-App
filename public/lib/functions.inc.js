@@ -16,7 +16,6 @@ function toggleRead(arg1) {
       moreText.style.display = "inline";
     }
   }
-
   function updateAccordion() {
     var accordion = (function(){
     
@@ -71,15 +70,19 @@ function toggleRead(arg1) {
   }
 
 
+  function hartie() {
+    console.log("e");
+  }
+
   function logoutButton(auth0) {
     auth0.logout({
-      returnTo: "http://localhost:3000/homepage" });
+      returnTo: "http://localhost:3000/views/homepage" });
       
   }
   function loginButton(auth0) {
     const login = async () => {
       await auth0.loginWithRedirect({
-        redirect_uri: "http://localhost:3000/homepage"
+        redirect_uri: "http://localhost:3000/views/donor/homepage"
       });
     };
     login();

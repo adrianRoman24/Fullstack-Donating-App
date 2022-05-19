@@ -1,0 +1,175 @@
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="../lib/functions.inc.js"></script>
+<script src="https://cdn.auth0.com/js/auth0-spa-js/1.19/auth0-spa-js.production.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+<script>
+// The Auth0 client, initialized in configureClient()
+  let auth0 = null;
+const configureClient = async () => {
+  auth0 = await createAuth0Client({
+    domain: "dev-b9s90wxq.us.auth0.com",
+    client_id: "4UeZo7p9CcBC1xzAX3yqLmRTNLn0igu7"
+  });
+};
+
+window.onload = async () => {
+await configureClient();
+
+const isAuthenticated = await auth0.isAuthenticated();
+const usr = await auth0.getUser();
+console.log(usr);
+if (isAuthenticated) {
+  console.log("> User is authenticated");
+  return;
+}
+
+console.log("> User not authenticated");
+const query = window.location.search;
+if (query.includes("code=") && query.includes("state=")) {
+
+  // Process the login state
+  await auth0.handleRedirectCallback();
+
+  // Use replaceState to redirect the user away and remove the querystring parameters
+  window.history.replaceState({}, document.title, "/");
+}
+
+};
+
+</script>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <title>Profile</title>
+    <link rel="shortcut icon" type="image/jpg" href="favicon1.png"/>
+</head>
+<body>
+<div class="container">
+    <div class="row profile">
+        <div class="col-md-3">
+            <div class="profile-sidebar fadeInDown" id="formContent">
+                <!-- SIDEBAR USERPIC -->
+                <div class="profile-userpic">
+                    <img src='../style/3.jpg' class='img-responsive' alt=''>
+                    
+
+                </div>
+                <!-- END SIDEBAR USERPIC -->
+                <!-- SIDEBAR USER TITLE -->
+                <div class="profile-usertitle">
+                    <div class="profile-usertitle-name">
+                        Tom Hardy
+                    </div>
+                    <div class="profile-usertitle-job">
+                        Refugee
+                    </div>
+                </div>
+                <!-- END SIDEBAR USER TITLE -->
+                <!-- SIDEBAR BUTTONS -->
+                <div class="profile-userbuttons">
+                    <button type='button' class='btn btn-danger btn-sm'>Message</button>
+                </div>
+                <!-- END SIDEBAR BUTTONS -->
+                <!-- SIDEBAR MENU -->
+                <div class="profile-usermenu">
+                    <ul class="nav">
+                        <li>
+                            <a href="../header.php">
+                                <i class="glyphicon glyphicon-arrow-left"></i>
+                                Main Page </a>
+                        </li>
+                        <li class="active">
+                            <a href="#">
+                                <i class="glyphicon glyphicon-home"></i>
+                                Overview </a>
+                        </li>
+                        <li>
+                            <a href="changePhoto.php">
+                                <i class="glyphicon glyphicon-user"></i>
+                                Change photo </a>
+                        </li>
+                        <li>
+                            <a href='./../includes/logout.inc.php'>
+                                <i class="glyphicon glyphicon-flag"></i>
+                                Logout </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- END MENU -->
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div style="background:#149CF0;"class="profile-content">
+                
+                <!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - Accordion</title>
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css'><link rel="stylesheet" href="../style/viewOffers.css">
+
+</head>
+<body> 
+    <script>
+         function addItem(title, desc, count, date) {
+            var acc = document.getElementById("accordionMain");
+            var itemDiv = document.createElement('div');
+            itemDiv.className = "accordion__item js-accordion-item";
+            acc.appendChild(itemDiv);
+            var headerDiv =  document.createElement('div');
+            headerDiv.className="accordion-header js-accordion-header";
+            headerDiv.innerHTML = title;
+            itemDiv.appendChild(headerDiv);
+            var bodyDiv = document.createElement('div');
+            bodyDiv.className = "accordion-body js-accordion-body";
+            itemDiv.appendChild(bodyDiv);
+            var contentDiv = document.createElement('div');
+            contentDiv.className = "accordion-body__contents";
+            contentDiv.innerHTML =
+             desc + "<br>Count: "+ count+"<br> Date: " + date;
+            bodyDiv.appendChild(contentDiv);
+         }
+    </script>
+<!-- partial:index.partial.html -->
+<div class="accordion js-accordion" id="accordionMain">
+    <script>
+        let reqsData = {
+        };
+        $.get( "http://localhost:3000/api/offer/view?donorEmail=mihai@yahoo.com", function( data ) {
+            console.log(data);
+            reqsData = data.result;
+            console.log("balaur");
+            console.log(reqsData.offers.length);
+            for(let i = 0; i < reqsData.offers.length; i++) {
+                var req = reqsData.offers[i];
+                var title = "";
+                title = title + "Offer in: " + req.location + " of type: " + req.type;
+                
+                addItem(title, req.description, req.capacity, req.date);
+            }
+            updateAccordion();
+        
+        });
+ 
+    </script>
+</div><!-- end of accordion -->
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+  <script  src="../lib/functions.inc.js"></script>
+</body>
+</html>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<center>
+</center>
+<br>
+<br>

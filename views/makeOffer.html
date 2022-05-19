@@ -11,7 +11,7 @@
 <body>
 
 
-<link rel="stylesheet" href="style/makeOffer.css">
+<link rel="stylesheet" href="../style/makeOffer.css">
 <div class="wrapper fadeInDown">
     <div id="formContent" style="background:#c2deec;">
         <!-- Tabs Titles -->
@@ -25,15 +25,17 @@
 <!-- Login Form -->
 <section class="signup-form">
     <h2><span id="blueColor">Create offer</span></h2>
-    <form action="includes/signup.inc.php" method="post">
-        <h1 style="float: left;">Type:</h1>
-        <input type="text" name="name" placeholder="Type...">
-        <h1 style="float: left;">Count: <span id="demo">0</span></h1>
+    <form action="/api/offer/publish" method="post">
+        <input type="text" name="donorEmail" placeholder="Type...">
+        <input type="text" name="type" placeholder="Type...">
+        <input type="text" name="description" placeholder="Type...">
+        <input type="text" name="location" placeholder="Type...">
+        <h2 style="color : black;" id="sliderValue"></h2>
         <div class="slidecontainer">
-            <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+            <input type="range" min="1" max="100" value="50" class="slider" id="myRange" name="capacity">
         </div>
         <h1 style="float: left;">Date:</h1>
-        <input style="position:relative; top:20px;" type="date" id="start" name="trip-start"
+        <input style="position:relative; top:20px;" type="date" id="date" name="date"
             value="2018-07-22"
             min="2018-01-01" max="2018-12-31">
         <button type="submit" name="submit" class="btn btn-success btn-sm" id="sign-up-button" style="width:150px; 
@@ -44,7 +46,7 @@
     
 <script>
     var slider = document.getElementById("myRange");
-    var output = document.getElementById("demo");
+    var output = document.getElementById("sliderValue");
     output.innerHTML = slider.value; // Display the default slider value
 
     // Update the current slider value (each time you drag the slider handle)
