@@ -79,7 +79,7 @@ if (query.includes("code=") && query.includes("state=")) {
                 <div class="profile-usermenu">
                     <ul class="nav">
                         <li>
-                            <a href="../header.php">
+                            <a href="/views/refugee/homepage">
                                 <i class="glyphicon glyphicon-arrow-left"></i>
                                 Main Page </a>
                         </li>
@@ -88,13 +88,18 @@ if (query.includes("code=") && query.includes("state=")) {
                                 <i class="glyphicon glyphicon-home"></i>
                                 Overview </a>
                         </li>
-                        <li>
-                            <a href="changePhoto.php">
-                                <i class="glyphicon glyphicon-user"></i>
-                                Change photo </a>
+                        <li class="active">
+                            <a href="#">
+                                <i ></i>
+                                Rating: <span id="rating"></span></a>
+                        </li>
+                        <li class="active">
+                            <a href="#">
+                                <i ></i>
+                                Gender: <span id="gender"></span></a>
                         </li>
                         <li>
-                            <a href='./../includes/logout.inc.php'>
+                            <a onClick="logoutButton(auth0);">
                                 <i class="glyphicon glyphicon-flag"></i>
                                 Logout </a>
                         </li>
