@@ -25,6 +25,7 @@ exports.get = async (req) => {
                 error: "Wrong account type",
             };
         }
+        found = JSON.parse(JSON.stringify(found));
         let ps = [];
         for (let i = 0; i < found.length; i += 1) {
             ps.push((async () => {
@@ -44,6 +45,7 @@ exports.get = async (req) => {
                 found[i].request = foundRequest;
             })());
         }
+        console.log(JSON.stringify(found));
         await Promise.allSettled(ps);
         return {
             result: {
