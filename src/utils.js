@@ -82,3 +82,15 @@ exports.consumeRabbitAlert = async (channel) => {
         console.log(JSON.parse(message.content.toString()));
     });
 };
+
+exports.isUserRegistered = async (req) => {
+    const registeredAsDonor = await require("../controller/donor.controller").getByEmail(req);
+    if (registeredAsDonor.result.donor !== null) {
+        return true;
+    }
+    const registeredAsRefugee = await require("../controller/refugee.controller").getByEmail(req);
+    if (registeredAsRefugee.result.donor !== null) {
+        return true;
+    }
+    return false;
+}
