@@ -149,8 +149,7 @@ if (query.includes("code=") && query.includes("state=")) {
         };
         function displayEntries(data) {
             reqsData = data.result;
-            console.log("balaur");
-            console.log(reqsData.offers.length);
+            
             for(let i = 0; i < reqsData.offers.length; i++) {
                 var req = reqsData.offers[i];
                 var title = "";

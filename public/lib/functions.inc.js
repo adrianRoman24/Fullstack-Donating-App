@@ -69,10 +69,6 @@ function toggleRead(arg1) {
   }
 
 
-  function hartie() {
-    console.log("e");
-  }
-
   function logoutButton(auth0) {
     auth0.logout({
       returnTo: "http://localhost:3000/views/homepage",
@@ -80,11 +76,12 @@ function toggleRead(arg1) {
   }
 
   function loginButton(auth0) {
-    console.log(auth0);
+    //console.log(auth0);
     const login = async () => {
       await auth0.loginWithRedirect({
         redirect_uri: "http://localhost:3000/views/homepage",
       });
+      
     };
     login();
 }
@@ -93,9 +90,6 @@ const viewMyOffers = async (auth0) => {
   try {
     // Get the access token from the Auth0 client
     const token = await auth0.getTokenSilently();
-    console.log(token);
-    // Make the call to the API, setting the token
-    // in the Authorization header
     const response = await fetch("/api/offer/view?donorEmail=mihai@yahoo.com", {
       headers: {
         Authorization: `Bearer ${token}`
@@ -105,12 +99,6 @@ const viewMyOffers = async (auth0) => {
     // Fetch the JSON result
     const responseData = await response.json();
     return responseData;
-    // Display the result in the output element
-    //const responseElement = document.getElementById("api-call-result");
-
-    //responseElement.innerText = JSON.stringify(responseData, {}, 2);
-
-    console.log(responseData);
 
 } catch (e) {
     // Display errors in the console
@@ -121,11 +109,7 @@ const viewMyOffers = async (auth0) => {
 const getProfileInfo = async (auth0) => { 
   try {
 
-    // Get the access token from the Auth0 client
     const token = await auth0.getTokenSilently();
-    console.log(token);
-    // Make the call to the API, setting the token
-    // in the Authorization header
     const response = await fetch("/api/donor/profile?accountType=donor&email=mihai@yahoo.com", {
       headers: {
         Authorization: `Bearer ${token}`
@@ -135,12 +119,6 @@ const getProfileInfo = async (auth0) => {
     // Fetch the JSON result
     const responseData = await response.json();
     return responseData;
-    // Display the result in the output element
-    //const responseElement = document.getElementById("api-call-result");
-
-    //responseElement.innerText = JSON.stringify(responseData, {}, 2);
-
-    console.log(responseData);
 
 } catch (e) {
     // Display errors in the console
@@ -151,11 +129,8 @@ const getProfileInfo = async (auth0) => {
 const viewPendingRequests = async (auth0) => { 
   try {
 
-    // Get the access token from the Auth0 client
     const token = await auth0.getTokenSilently();
-    console.log(token);
-    // Make the call to the API, setting the token
-    // in the Authorization header
+
     const response = await fetch("/api/request/viewPending?donorEmail=mihai@yahoo.com", {
       headers: {
         Authorization: `Bearer ${token}`
@@ -181,26 +156,16 @@ const viewPendingRequests = async (auth0) => {
 const viewMyRequests = async (auth0) => { 
   try {
 
-    // Get the access token from the Auth0 client
     const token = await auth0.getTokenSilently();
-    console.log(token);
-    // Make the call to the API, setting the token
-    // in the Authorization header
+
     const response = await fetch("/api/request/view?email=alex@yahoo.com", {
       headers: {
         Authorization: `Bearer ${token}`
       }
     });
 
-    // Fetch the JSON result
     const responseData = await response.json();
     return responseData;
-    // Display the result in the output element
-    //const responseElement = document.getElementById("api-call-result");
-
-    //responseElement.innerText = JSON.stringify(responseData, {}, 2);
-
-    console.log(responseData);
 
 } catch (e) {
     // Display errors in the console
@@ -211,26 +176,16 @@ const viewMyRequests = async (auth0) => {
 const viewOffers = async (auth0) => { 
   try {
 
-    // Get the access token from the Auth0 client
     const token = await auth0.getTokenSilently();
-    console.log(token);
-    // Make the call to the API, setting the token
-    // in the Authorization header
+    
     const response = await fetch("/api/offer/viewAll?offset=0", {
       headers: {
         Authorization: `Bearer ${token}`
       }
     });
 
-    // Fetch the JSON result
     const responseData = await response.json();
     return responseData;
-    // Display the result in the output element
-    //const responseElement = document.getElementById("api-call-result");
-
-    //responseElement.innerText = JSON.stringify(responseData, {}, 2);
-
-    console.log(responseData);
 
 } catch (e) {
     // Display errors in the console
@@ -238,9 +193,59 @@ const viewOffers = async (auth0) => {
   }
 };
 
+
+const acceptRequest = async (auth0, requestId) => {
+  
+  try {
+
+  const token = await auth0.getTokenSilently();
+  console.log(token);
+  
+  const response = await fetch("/api/request/update", {
+    method: "put",
+    body: JSON.stringify({
+        requestId,
+        accept: true,
+    }),
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+});
+
+  const responseData = await response.json();
+  location.reload();
+} catch (e) {
+  // Display errors in the console
+  console.error(e);
+}
+}
+
+const viewHistory = async (auth0, mail, type) => {
+  
+  try {
+
+  const token = await auth0.getTokenSilently();
+  console.log(token);
+  // Make the call to the API, setting the token
+  // in the Authorization header
+  const response = await fetch("/api/interaction/history?email=" + mail +"&accountType=" + type, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+
+  // Fetch the JSON result
+  const responseData = await response.json();
+  return responseData;
+} catch (e) {
+  // Display errors in the console
+  console.error(e);
+}
+}
+
 function fetchCredentials() {
   return {
     domain: "dev-sqqag002.us.auth0.com",
-    client_id: "goxwRqT3y1zl78JTmTwaQPz3EIicW0zk",
-    audience: "http://localhost:3001",};
+    client_id: "Riup2s3V38r2h62HymL4c3eKnhMndu52",
+    audience: "Donating-App",};
 }

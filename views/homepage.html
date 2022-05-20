@@ -14,11 +14,9 @@
   let auth0 = null;
 
   const configureClient = async () => {
-    auth0 = await createAuth0Client({
-      domain: "dev-sqqag002.us.auth0.com",
-      client_id: "goxwRqT3y1zl78JTmTwaQPz3EIicW0zk",
-      audience: "http://localhost:3001",
-    });
+    auth0 = await createAuth0Client(
+      fetchCredentials()
+    );
   };
 
   window.onload = async () => {
@@ -26,7 +24,7 @@
 
   const isAuthenticated = await auth0.isAuthenticated();
   const usr = await auth0.getUser();
-  console.log(usr);
+  
   if (isAuthenticated) {
     document.getElementById('loginButton').style.visibility = "hidden";
     document.getElementById('signupButton').style.visibility = "hidden";
@@ -37,6 +35,7 @@
   }
   if (isAuthenticated) {
     console.log("> User is authenticated");
+    
     return;
   }
 
