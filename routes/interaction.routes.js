@@ -15,6 +15,7 @@ module.exports = (app) => {
             return;
         }
         const result = await interaction.get(req);
+        log(result);
         res.send(result);
     });
 

@@ -80,10 +80,9 @@ function toggleRead(arg1) {
       
   }
   function loginButton(auth0) {
-    console.log(auth0);
     const login = async () => {
       await auth0.loginWithRedirect({
-        redirect_uri: "http://localhost:3000/views/refugee/homepage"
+        redirect_uri: "http://localhost:3000/views/donor/homepage"
       });
     };
     login();
@@ -239,8 +238,55 @@ const viewOffers = async (auth0) => {
   }
 };
 
+const acceptRequest = async (auth0, requestId) => {
+  
+  try {
+
+  const token = await auth0.getTokenSilently();
+  console.log(token);
+  // Make the call to the API, setting the token
+  // in the Authorization header
+  const response = await fetch("/api/request/update?requestId=" + requestId + "&accept=true", {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+
+  // Fetch the JSON result
+  const responseData = await response.json();
+  location.reload();
+} catch (e) {
+  // Display errors in the console
+  console.error(e);
+}
+}
+
+const viewHistory = async (auth0, mail, type) => {
+  
+  try {
+
+  const token = await auth0.getTokenSilently();
+  console.log(token);
+  // Make the call to the API, setting the token
+  // in the Authorization header
+  const response = await fetch("/api/interaction/history?email=" + mail +"&accountType=" + type, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+
+  // Fetch the JSON result
+  const responseData = await response.json();
+  return responseData;
+} catch (e) {
+  // Display errors in the console
+  console.error(e);
+}
+}
+
 function fetchCredentials() {
   return {
-    domain: "dev-sqqag002.us.auth0.com",
-    client_id: "goxwRqT3y1zl78JTmTwaQPz3EIicW0zk"};
+    domain: "dev-b9s90wxq.us.auth0.com",
+    client_id: "4UeZo7p9CcBC1xzAX3yqLmRTNLn0igu7"
+    };
 }

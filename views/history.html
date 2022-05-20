@@ -1,7 +1,7 @@
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="../lib/functions.inc.js"></script>
+<script src="lib/functions.inc.js"></script>
 <script src="https://cdn.auth0.com/js/auth0-spa-js/1.19/auth0-spa-js.production.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
@@ -21,7 +21,10 @@ const isAuthenticated = await auth0.isAuthenticated();
 const usr = await auth0.getUser();
 console.log(usr);
 if (isAuthenticated) {
-  var res = await viewPendingRequests(auth0);
+    var mail = "mihai@yahoo.com";
+    var accType = "donor";
+  var res = await viewHistory(auth0, mail, accType);
+  console.log(res);
   displayEntries(res);
   console.log("> User is authenticated");
   return;
@@ -55,7 +58,7 @@ if (query.includes("code=") && query.includes("state=")) {
             <div class="profile-sidebar fadeInDown" id="formContent">
                 <!-- SIDEBAR USERPIC -->
                 <div class="profile-userpic">
-                    <img src='../style/3.jpg' class='img-responsive' alt=''>
+                    <img src='style/3.jpg' class='img-responsive' alt=''>
                     
 
                 </div>
@@ -117,12 +120,12 @@ if (query.includes("code=") && query.includes("state=")) {
   <meta charset="UTF-8">
   <title>CodePen - Accordion</title>
   <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
-<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css'><link rel="stylesheet" href="../style/viewOffers.css">
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css'><link rel="stylesheet" href="style/viewOffers.css">
 
 </head>
 <body> 
     <script>
-         function addItem(title, desc, count, date, requestId) {
+         function addItem(title, oid, rid) {
             var acc = document.getElementById("accordionMain");
             var itemDiv = document.createElement('div');
             itemDiv.className = "accordion__item js-accordion-item";
@@ -136,35 +139,31 @@ if (query.includes("code=") && query.includes("state=")) {
             itemDiv.appendChild(bodyDiv);
             var contentDiv = document.createElement('div');
             contentDiv.className = "accordion-body__contents";
-            contentDiv.innerHTML =
-             desc + "<br>Count: "+ count+"<br> Date: " + date +
-            "<br> <button type='button' class='btn btn-danger btn-sm'><a onClick='acceptRequest(auth0," + requestId + ");'>Accept request</a></button>";
+            contentDiv.innerHTML = "<br>OfferID: "+ oid+"<br> RequestID: " + rid;
             bodyDiv.appendChild(contentDiv);
          }
     </script>
 <!-- partial:index.partial.html -->
 <div class="accordion js-accordion" id="accordionMain">
     <script>
-         let reqsData = {
+        let reqsData = {
         };
         function displayEntries(data) {
-            reqsData = data.result;
-            console.log(reqsData.requests.length);
-            for(let i = 0; i < reqsData.requests.length; i++) {
-                var req = reqsData.requests[i];
+            reqsData = data.result.history;
+            for(let i = 0; i < reqsData.length; i++) {
+                var req = reqsData[i];
                 var title = "";
-                title = title + "Request from: " + req.refugeeEmail;
+                title = title + "Interaction between " + req.donorEmail + " and " + req.refugeeEmail;
                 
-                addItem(title, req.description, req.count, req.date, req.id);
+                addItem(title, req.offerId, req.requestId);
             }
             updateAccordion();
         }
- 
     </script>
 </div><!-- end of accordion -->
 <!-- partial -->
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-  <script  src="../lib/functions.inc.js"></script>
+
 </body>
 </html>
 

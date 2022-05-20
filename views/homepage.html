@@ -14,16 +14,15 @@
   let auth0 = null;
 
   const configureClient = async () => {
-    auth0 = await createAuth0Client({
-      domain: "dev-sqqag002.us.auth0.com",
-      client_id: "goxwRqT3y1zl78JTmTwaQPz3EIicW0zk"
-    });
+    auth0 = await createAuth0Client(
+      fetchCredentials()
+    );
   };
 
   window.onload = async () => {
   await configureClient();
-
   const isAuthenticated = await auth0.isAuthenticated();
+  console.log(isAuthenticated);
   if (isAuthenticated) {
     document.getElementById('loginButton').style.visibility = "hidden";
     document.getElementById('signupButton').style.visibility = "hidden";
@@ -50,16 +49,6 @@
 }
 
 };
-
-//_----------------------------------
-
-
-
-
-
-
-//_----------------------------------
-
 
 </script>
 <body>

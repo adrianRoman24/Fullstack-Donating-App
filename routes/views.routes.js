@@ -56,13 +56,9 @@ module.exports = (app) => {
     router.get("/request/my_requests", (_, res) => {
         res.sendFile(path.join(__dirname, "../views/my_requests.html"));
     });
-    
-    router.get("/history/offer_view", (_, res) => {
-        res.sendFile(path.join(__dirname, "../views/view_offers_history.html"));
-    });
-    
-    router.get("/history/request_view", (_, res) => {
-        res.sendFile(path.join(__dirname, "../views/view_requests_history.html"));
+
+    router.get("/history", (_, res) => {
+        res.sendFile(path.join(__dirname, "../views/history.html"));
     });
 
     app.use("/views", router);

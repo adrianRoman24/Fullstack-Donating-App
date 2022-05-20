@@ -45,9 +45,9 @@ module.exports = (app) => {
         res.send(result);
     });
 
-    router.put("/update", async (req, res) => {
+    router.get("/update", async (req, res) => {
         log(`Update request: ${JSON.stringify(req.body)}`);
-        if (!"requestId" in req.body || !"accept" in req.body) {
+        if (!"requestId" in req.query || !"accept" in req.query) {
             res.status(400);
             res.send({
                 error: "requestId or accept not found in body",

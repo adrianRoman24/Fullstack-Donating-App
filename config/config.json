@@ -1,7 +1,7 @@
 {
     "SERVER_PORT": 3000,
     "ISSUER_BASE_URL": "https://dev-sqqag002.us.auth0.com",
-    "BASE_URL": "http://localhost:3000",
+    "BASE_URL": "http://localhost:3001",
     "ALGORITHMS": ["RS256"],
     "JWKS_URI": "https://dev-sqqag002.us.auth0.com/.well-known/jwks.json",
     "JWKS_CACHE": true,

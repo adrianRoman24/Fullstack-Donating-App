@@ -75,18 +75,19 @@ exports.getPendingByDonor = async (req) => {
 // update request by donor
 exports.update = async (req) => {
     try {
-         // find request
+         // find request 
+         log(req.query.accept);
         const request = await Request.findOne({
             where: {
-                id: req.body.requestId,
+                id: req.query.requestId,
             },
-        });
-        if (req.body.accept === true) {
+        });log(req.query.accept);
+        if (req.query.accept === "true") {  log('ekefant3');
             // find offer
             const offer = await Offer.findOne({
                 where: {
                     id: request.offerId,
-                },
+                }
             })
             // update offer
             const updatedOffer = await offer.update({
@@ -97,7 +98,7 @@ exports.update = async (req) => {
                 refugeeEmail: request.refugeeEmail,
                 donorEmail: request.donorEmail,
                 offerId: request.offerId,
-                requestId: req.body.requestId,
+                requestId: req.query.requestId,
             });
             // update request status
             const updatedRequest = await request.update({
