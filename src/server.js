@@ -26,6 +26,11 @@ async function main() {
     require("../routes")(app);
     log("Routes initialized");
 
+    // basic route
+    app.get("/", (_, res) => {
+        res.redirect("http://localhost:3000/views/homepage");
+    });
+
     // listen on port 3000
     app.listen(config.SERVER_PORT, () => {
         log(`Listening on port ${config.SERVER_PORT}`);

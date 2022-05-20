@@ -25,14 +25,16 @@
   await configureClient();
 
   const isAuthenticated = await auth0.isAuthenticated();
+  const usr = await auth0.getUser();
+  console.log(usr);
   if (isAuthenticated) {
     document.getElementById('loginButton').style.visibility = "hidden";
     document.getElementById('signupButton').style.visibility = "hidden";
     document.getElementById('logoutButton').style.visibility = "visible";
-    
+    document.getElementById('homepageV2').onclick = function () {
+        location.href = `/views/refugee/homepage?email=${usr.email}`;
+  };
   }
-  const usr = await auth0.getUser();
-  console.log(usr);
   if (isAuthenticated) {
     console.log("> User is authenticated");
     return;
@@ -46,8 +48,7 @@
 
     // Use replaceState to redirect the user away and remove the querystring parameters
     window.history.replaceState({}, document.title, "/");
-}
-
+  }
 };
 
 </script>
@@ -66,12 +67,14 @@
           <ul id="menu">
             <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
             <li style="border-radius: 25%;"><a style="border-radius: 25%;" href="/views/refugee/homepage">Home</a></li>
+            <li id="homepageV2" style="border-radius: 25%;"><a style="border-radius: 25%;" onClick="homepage()">HomeV2</a></li>
             <li style="border-radius: 25%;"><a style="border-radius: 25%;" href="examples.html">About us</a></li>
             <li style="border-radius: 25%;"><a style="border-radius: 25%;" href="page.html">News</a></li>
             <li style="border-radius: 25%;"><a style="border-radius: 25%;" href="another_page.html">Contact</a></li>
           </ul>
           <ul id="menu" style="float: right;">
             <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
+            
             <li id="loginButton" style="border-radius: 25%;"><a style="border-radius: 25%;" onClick="loginButton(auth0);">Log in</a></li>
             <li id="signupButton" style="border-radius: 25%;"><a  onClick="loginButton(auth0);" style="border-radius: 25%;">Sign up</a></li>
             <li id="logoutButton" style=" visibility: hidden; border-radius: 25%;">

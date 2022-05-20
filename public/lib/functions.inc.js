@@ -50,7 +50,6 @@ function toggleRead(arg1) {
           $('.js-accordion-item.active').find('> .js-accordion-body').show();
         },
         toggle: function($this) {
-                
           if(settings.oneOpen && $this[0] != $this.closest('.js-accordion').find('> .js-accordion-item.active > .js-accordion-header')[0]) {
             $this.closest('.js-accordion')
                   .find('> .js-accordion-item') 
@@ -76,14 +75,15 @@ function toggleRead(arg1) {
 
   function logoutButton(auth0) {
     auth0.logout({
-      returnTo: "http://localhost:3000/views/homepage" });
-      
+      returnTo: "http://localhost:3000/views/homepage",
+    });
   }
+
   function loginButton(auth0) {
     console.log(auth0);
     const login = async () => {
       await auth0.loginWithRedirect({
-        redirect_uri: "http://localhost:3000/views/refugee/homepage"
+        redirect_uri: "http://localhost:3000/views/homepage",
       });
     };
     login();
@@ -91,7 +91,6 @@ function toggleRead(arg1) {
 
 const viewMyOffers = async (auth0) => { 
   try {
-
     // Get the access token from the Auth0 client
     const token = await auth0.getTokenSilently();
     console.log(token);
