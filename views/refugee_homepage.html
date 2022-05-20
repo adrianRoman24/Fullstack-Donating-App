@@ -25,7 +25,7 @@ const isAuthenticated = await auth0.isAuthenticated();
 const usr = await auth0.getUser();
 console.log(usr);
 if (isAuthenticated) {
-  
+  document.getElementById('nameTitle').innerHTML = usr.email;
   console.log("> User is authenticated");
   return;
 }
@@ -51,7 +51,7 @@ if (query.includes("code=") && query.includes("state=")) {
       <div  id="logo">
         <div id="logo_text">
           <!-- class="logo_colour", allows you to change the colour of the text -->
-          <h3 style="top:50px; position:relative;"><a href="/views/refugee/profile"><span class="logo_colour" style="font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif">Tom Hardy</span></a></h3>
+          <h3 style="top:50px; position:relative;"><a href="/views/refugee/profile"><span  id="nameTitle" class="logo_colour" style="font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif"></span></a></h3>
         </div>
       </div>
       

@@ -12,6 +12,7 @@
 <script>
 // The Auth0 client, initialized in configureClient()
   let auth0 = null;
+  var accType;
 
   const configureClient = async () => {
     auth0 = await createAuth0Client(
@@ -24,14 +25,15 @@
 
   const isAuthenticated = await auth0.isAuthenticated();
   const usr = await auth0.getUser();
+  accType = usr['http://Donating-App/roles'][0];
   
   if (isAuthenticated) {
     document.getElementById('loginButton').style.visibility = "hidden";
     document.getElementById('signupButton').style.visibility = "hidden";
     document.getElementById('logoutButton').style.visibility = "visible";
-    document.getElementById('homepageV2').onclick = function () {
-        location.href = `/views/refugee/homepage?email=${usr.email}`;
-  };
+    document.getElementById('homeButton').style.visibility = "visible";
+    document.getElementById('homeLink').href = "/views/" + accType + "/homepage";
+    
   }
   if (isAuthenticated) {
     console.log("> User is authenticated");
@@ -65,8 +67,7 @@
         <div id="menubar">
           <ul id="menu">
             <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
-            <li style="border-radius: 25%;"><a style="border-radius: 25%;" href="/views/refugee/homepage">Home</a></li>
-            <li id="homepageV2" style="border-radius: 25%;"><a style="border-radius: 25%;" onClick="homepage()">HomeV2</a></li>
+            <li id="homeButton" style="border-radius: 25%; visibility: hidden;"><a style="border-radius: 25%;" id="homeLink">Home</a></li>
             <li style="border-radius: 25%;"><a style="border-radius: 25%;" href="examples.html">About us</a></li>
             <li style="border-radius: 25%;"><a style="border-radius: 25%;" href="page.html">News</a></li>
             <li style="border-radius: 25%;"><a style="border-radius: 25%;" href="another_page.html">Contact</a></li>

@@ -86,11 +86,11 @@ function toggleRead(arg1) {
     login();
 }
 
-const viewMyOffers = async (auth0) => { 
+const viewMyOffers = async (auth0, mail) => { 
   try {
     // Get the access token from the Auth0 client
     const token = await auth0.getTokenSilently();
-    const response = await fetch("/api/offer/view?donorEmail=mihai@yahoo.com", {
+    const response = await fetch("/api/offer/view?donorEmail=" + mail, {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -106,11 +106,11 @@ const viewMyOffers = async (auth0) => {
   }
 };
 
-const getProfileInfo = async (auth0) => { 
+const getProfileInfo = async (auth0, accType, mail) => { 
   try {
 
     const token = await auth0.getTokenSilently();
-    const response = await fetch("/api/donor/profile?accountType=donor&email=mihai@yahoo.com", {
+    const response = await fetch("/api/donor/profile?accountType="+accType+"&email="+mail, {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -126,12 +126,12 @@ const getProfileInfo = async (auth0) => {
   }
 };
 
-const viewPendingRequests = async (auth0) => { 
+const viewPendingRequests = async (auth0, mail) => { 
   try {
 
     const token = await auth0.getTokenSilently();
 
-    const response = await fetch("/api/request/viewPending?donorEmail=mihai@yahoo.com", {
+    const response = await fetch("/api/request/viewPending?donorEmail=" + mail, {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -153,12 +153,12 @@ const viewPendingRequests = async (auth0) => {
   }
 };
 
-const viewMyRequests = async (auth0) => { 
+const viewMyRequests = async (auth0, mail) => { 
   try {
 
     const token = await auth0.getTokenSilently();
 
-    const response = await fetch("/api/request/view?email=alex@yahoo.com", {
+    const response = await fetch("/api/request/view?email=" + mail, {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -173,12 +173,12 @@ const viewMyRequests = async (auth0) => {
   }
 };
 
-const viewOffers = async (auth0) => { 
+const viewOffers = async (auth0, offset) => { 
   try {
 
     const token = await auth0.getTokenSilently();
     
-    const response = await fetch("/api/offer/viewAll?offset=0", {
+    const response = await fetch("/api/offer/viewAll?offset=" + offset, {
       headers: {
         Authorization: `Bearer ${token}`
       }
