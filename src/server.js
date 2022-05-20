@@ -2,6 +2,8 @@ const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
 const helmet = require("helmet");
+var http = require('http');
+
 
 const { log } = require("./utils");
 const config = require("../config/config.json");
@@ -16,8 +18,9 @@ async function main() {
     log("Database initialized")
 
     // add middlewares
+    app.engine('html', require('ejs').renderFile);
     app.use(bodyParser.json());
-    app.use(helmet());
+    app.use(bodyParser.urlencoded({ extended: false }));
     
     // initialize routes
     require("../routes")(app);

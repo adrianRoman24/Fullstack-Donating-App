@@ -26,7 +26,6 @@ exports.jwtCheck = jwt({
   issuer: config.ISSUER_BASE_URL,
   algorithms: config.ALGORITHMS,
 });
-
 exports.initRabbit = async () => {
     const s = amqpUri({
         ssl: false,

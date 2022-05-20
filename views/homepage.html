@@ -5,7 +5,52 @@
   <title>First official donating site in Romania</title>
   <link rel="stylesheet" type="text/css" href="style/style.css" />
 </head>
+<script src="lib/functions.inc.js"></script>
+<script src="https://cdn.auth0.com/js/auth0-spa-js/1.19/auth0-spa-js.production.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+<script>
+// The Auth0 client, initialized in configureClient()
+  let auth0 = null;
 
+  const configureClient = async () => {
+    auth0 = await createAuth0Client({
+      domain: "dev-b9s90wxq.us.auth0.com",
+      client_id: "4UeZo7p9CcBC1xzAX3yqLmRTNLn0igu7"
+    });
+  };
+
+  window.onload = async () => {
+  await configureClient();
+
+  const isAuthenticated = await auth0.isAuthenticated();
+  if (isAuthenticated) {
+    document.getElementById('loginButton').style.visibility = "hidden";
+    document.getElementById('signupButton').style.visibility = "hidden";
+    document.getElementById('logoutButton').style.visibility = "visible";
+    
+  }
+  const usr = await auth0.getUser();
+  console.log(usr);
+  if (isAuthenticated) {
+    console.log("> User is authenticated");
+    return;
+  }
+
+  console.log("> User not authenticated");
+  const query = window.location.search;
+  if (query.includes("code=") && query.includes("state=")) {
+
+    // Process the login state
+    await auth0.handleRedirectCallback();
+
+    // Use replaceState to redirect the user away and remove the querystring parameters
+    window.history.replaceState({}, document.title, "/");
+}
+
+};
+
+</script>
 <body>
   <div id="main">
     <div id="header">
@@ -20,15 +65,17 @@
         <div id="menubar">
           <ul id="menu">
             <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
-            <li style="border-radius: 25%;"><a style="border-radius: 25%;" href="index.html">Home</a></li>
+            <li style="border-radius: 25%;"><a style="border-radius: 25%;" href="/views/donor/homepage">Home</a></li>
             <li style="border-radius: 25%;"><a style="border-radius: 25%;" href="examples.html">About us</a></li>
             <li style="border-radius: 25%;"><a style="border-radius: 25%;" href="page.html">News</a></li>
             <li style="border-radius: 25%;"><a style="border-radius: 25%;" href="another_page.html">Contact</a></li>
           </ul>
           <ul id="menu" style="float: right;">
             <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
-            <li style="border-radius: 25%;"><a style="border-radius: 25%;" href="/login">Log in</a></li>
-            <li style="border-radius: 25%;"><a style="border-radius: 25%;" href="examples.html">Sign up</a></li>
+            <li id="loginButton" style="border-radius: 25%;"><a style="border-radius: 25%;" onClick="loginButton(auth0);">Log in</a></li>
+            <li id="signupButton" style="border-radius: 25%;"><a  onClick="loginButton(auth0);" style="border-radius: 25%;">Sign up</a></li>
+            <li id="logoutButton" style=" visibility: hidden; border-radius: 25%;">
+            <a  onclick="logoutButton(auth0);" style="border-radius: 25%;">Log out</a></li>
           </ul>
         </div>
       </article>

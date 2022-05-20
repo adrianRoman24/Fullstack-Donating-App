@@ -28,7 +28,8 @@ module.exports = (app) => {
             });
         }
         const result = await offer.add(req);
-        res.send(result);
+        log(result);
+        res.redirect("/views/donor/homepage");
     });
 
     router.get("/view", async (req, res) => {

@@ -6,6 +6,7 @@ module.exports = (app) => {
     router.use(express.static(path.join(__dirname, '/../public')));
 
     router.get("/homepage", (_, res) => {
+
         res.sendFile(path.join(__dirname, "../views/homepage.html"));
     });
 
@@ -39,6 +40,22 @@ module.exports = (app) => {
 
     router.get("/offer/view", (_, res) => {
         res.sendFile(path.join(__dirname, "../views/view_offers.html"));
+    });
+
+    router.get("/offer/my_offers", (_, res) => {
+        res.sendFile(path.join(__dirname, "../views/my_offers.html"));
+    });
+
+    router.get("/request/view", (_, res) => {
+        res.sendFile(path.join(__dirname, "../views/view_requests.html"));
+    });
+    
+    router.get("/history/offer_view", (_, res) => {
+        res.sendFile(path.join(__dirname, "../views/view_offers_history.html"));
+    });
+    
+    router.get("/history/request_view", (_, res) => {
+        res.sendFile(path.join(__dirname, "../views/view_requests_history.html"));
     });
 
     app.use("/views", router);
