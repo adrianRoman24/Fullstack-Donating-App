@@ -18,8 +18,10 @@ module.exports = (app) => {
             // check if email is registered
             const isRegistered = await isUserRegistered(req);
             if (isRegistered === true) {
+                log("User not registered");
                 res.sendFile(path.join(__dirname, "../views/homepage.html"));
             } else {
+                log("User registered")
                 res.sendFile(path.join(__dirname, "../views/signup.html"));
             }
         } else {
