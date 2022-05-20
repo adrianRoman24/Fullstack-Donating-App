@@ -24,10 +24,10 @@
   await configureClient();
 
   const isAuthenticated = await auth0.isAuthenticated();
-  const usr = await auth0.getUser();
-  accType = usr['http://Donating-App/roles'][0];
   
   if (isAuthenticated) {
+    const usr = await auth0.getUser();
+    accType = usr['http://Donating-App/roles'][0];
     document.getElementById('loginButton').style.visibility = "hidden";
     document.getElementById('signupButton').style.visibility = "hidden";
     document.getElementById('logoutButton').style.visibility = "visible";
