@@ -69,10 +69,11 @@ module.exports = async (app) => {
         if ("result" in result) {
             // request was updated by donor
             // // publish alert on rabbitmq queue to notify refugee
+            console.log()
             publishRabbitAlert(channel, {
-                email: result.request.refugeeEmail,
-                subject: `Request  ${result.request.status} by donor`,
-                body: `Request ${result.request.id} was ${result.request.status} by donor ${result.request.donorEmail}`,
+                email: result.result.request.refugeeEmail,
+                subject: `Request  ${result.result.request.status} by donor`,
+                body: `Request ${result.result.request.id} was ${result.result.request.status} by donor ${result.result.request.donorEmail}`,
             });
         }
     });
