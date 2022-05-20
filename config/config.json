@@ -1,7 +1,7 @@
 {
     "SERVER_PORT": 3000,
     "BASE_URL": "http://localhost:3000/",
-    "JWT_AUDIENCE": "http://localhost:3001/",
+    "JWT_AUDIENCE": "Donating-App",
     "JWT_ISSUER": "https://dev-sqqag002.us.auth0.com/",
     "JWT_ALGORITHMS": ["RS256"],
     "JWKS_CACHE": true,

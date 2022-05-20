@@ -32,7 +32,7 @@ module.exports = (app) => {
         res.redirect("/views/donor/homepage");
     });
 
-    router.get("/view", async (req, res) => {
+    router.get("/view", jwtCheck, async (req, res) => {
         log(`View offers: ${JSON.stringify(req.headers)}`);
         if (!"donorEmail" in req.query) {
             req.status(400);
