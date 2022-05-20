@@ -83,7 +83,7 @@ function toggleRead(arg1) {
     console.log(auth0);
     const login = async () => {
       await auth0.loginWithRedirect({
-        redirect_uri: "http://localhost:3000/views/donor/homepage"
+        redirect_uri: "http://localhost:3000/views/refugee/homepage"
       });
     };
     login();
