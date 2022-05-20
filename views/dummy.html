@@ -1,10 +1,3 @@
-<!DOCTYPE HTML>
-<html>
-
-<head>
-  <title>First official donating site in Romania</title>
-  <link rel="stylesheet" type="text/css" href="style/style.css" />
-</head>
 <script src="lib/functions.inc.js"></script>
 <script src="https://cdn.auth0.com/js/auth0-spa-js/1.19/auth0-spa-js.production.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -24,67 +17,18 @@
   await configureClient();
 
   const isAuthenticated = await auth0.isAuthenticated();
-  const usr = await auth0.getUser();
-  accType = usr['http://Donating-App/roles'][0];
   
   if (isAuthenticated) {
-    document.getElementById('loginButton').style.visibility = "hidden";
-    document.getElementById('signupButton').style.visibility = "hidden";
-    document.getElementById('logoutButton').style.visibility = "visible";
-    document.getElementById('homeButton').style.visibility = "visible";
-    document.getElementById('homeLink').href = "/views/" + accType + "/homepage";
-    
-  }
-  if (isAuthenticated) {
+    const usr = await auth0.getUser();
+    location.href = "/views/homepage?email="+usr.email;
     console.log("> User is authenticated");
     return;
   }
-
-  console.log("> User not authenticated");
+  console.log("user not auth");
   const query = window.location.search;
   if (query.includes("code=") && query.includes("state=")) {
-    // Process the login state
     await auth0.handleRedirectCallback();
-
-    // Use replaceState to redirect the user away and remove the querystring parameters
-    window.history.replaceState({}, document.title, "/");
+    location.href = "/views/dummy";
   }
 };
-
 </script>
-<body>
-  <div id="main">
-    <div id="header">
-      <div id="logo">
-        <div id="logo_text">
-          <!-- class="logo_colour", allows you to change the colour of the text -->
-          <h1><a href="index.html"><span class="logo_colour" style="font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif">First official donating site in Romania</span></a></h1>
-        </div>
-      </div>
-      
-      <article class="mainBlue">
-        <div id="menubar">
-          <ul id="menu">
-            <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
-            <li id="homeButton" style="border-radius: 25%; visibility: hidden;"><a style="border-radius: 25%;" id="homeLink">Home</a></li>
-            <li style="border-radius: 25%;"><a style="border-radius: 25%;" href="examples.html">About us</a></li>
-            <li style="border-radius: 25%;"><a style="border-radius: 25%;" href="page.html">News</a></li>
-            <li style="border-radius: 25%;"><a style="border-radius: 25%;" href="another_page.html">Contact</a></li>
-          </ul>
-          <ul id="menu" style="float: right;">
-            <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
-            
-            <li id="loginButton" style="border-radius: 25%;"><a style="border-radius: 25%;" onClick="loginButton(auth0);">Log in</a></li>
-            <li id="signupButton" style="border-radius: 25%;"><a  onClick="loginButton(auth0);" style="border-radius: 25%;">Sign up</a></li>
-            <li id="logoutButton" style=" visibility: hidden; border-radius: 25%;">
-            <a  onclick="logoutButton(auth0);" style="border-radius: 25%;">Log out</a></li>
-          </ul>
-        </div>
-      </article>
-    </div>
-    <img src="style/1.jpg" style="float:left;width:500px;height:270px; top:30px; left:100px; position:relative;">
-    <img src="style/2.jpg" style="float:right;width:500px;height:270px; top:30px; right:100px; position:relative;">
-    <div id="content_header"></div>
-   
-</body>
-</html>

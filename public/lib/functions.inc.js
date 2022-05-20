@@ -79,7 +79,7 @@ function toggleRead(arg1) {
     //console.log(auth0);
     const login = async () => {
       await auth0.loginWithRedirect({
-        redirect_uri: "http://localhost:3000/views/homepage",
+        redirect_uri: "http://localhost:3000/views/dummy",
       });
       
     };
@@ -248,4 +248,8 @@ function fetchCredentials() {
     domain: "dev-sqqag002.us.auth0.com",
     client_id: "Riup2s3V38r2h62HymL4c3eKnhMndu52",
     audience: "Donating-App",};
+}
+
+function tryy() {
+  console.log("e");
 }

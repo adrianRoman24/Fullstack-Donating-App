@@ -13,15 +13,16 @@ module.exports = (app) => {
 
     // added as login callback
     router.get("/homepage", async (req, res) => {
-        log(`Homepage: ${req.query}`);
+        log(`Homepage: ${JSON.stringify(req.query)}`);
         if ("email" in req.query) {
             // check if email is registered
+
             const isRegistered = await isUserRegistered(req);
             if (isRegistered === true) {
-                log("User not registered");
+                log("User registered");
                 res.sendFile(path.join(__dirname, "../views/homepage.html"));
             } else {
-                log("User registered")
+                log("User not registered")
                 res.sendFile(path.join(__dirname, "../views/signup.html"));
             }
         } else {

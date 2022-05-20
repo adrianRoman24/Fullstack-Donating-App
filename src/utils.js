@@ -88,8 +88,9 @@ exports.isUserRegistered = async (req) => {
     if (registeredAsDonor.result.donor !== null) {
         return true;
     }
+
     const registeredAsRefugee = await require("../controller/refugee.controller").getByEmail(req);
-    if (registeredAsRefugee.result.donor !== null) {
+    if (registeredAsRefugee.result.refugee !== null) {
         return true;
     }
     return false;

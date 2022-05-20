@@ -27,6 +27,7 @@
   
   if (isAuthenticated) {
     const usr = await auth0.getUser();
+    console.log(usr);
     accType = usr['http://Donating-App/roles'][0];
     document.getElementById('loginButton').style.visibility = "hidden";
     document.getElementById('signupButton').style.visibility = "hidden";
