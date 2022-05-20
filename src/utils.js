@@ -17,15 +17,16 @@ exports.log = (toLog, type="LOG") => {
 
 exports.jwtCheck = jwt({
     secret: jwks.expressJwtSecret({
-        cache: true,
-        rateLimit: true,
-        jwksRequestsPerMinute: 5,
-        jwksUri: 'https://dev-sqqag002.us.auth0.com/.well-known/jwks.json'
+        cache: config.JWKS_CACHE,
+        rateLimit: config.JWKS_RATE_LIMIT,
+        jwksRequestsPerMinute: config.JWKS_REQUESTS_PER_MINUTE,
+        jwksUri: config.JWKS_URI,
       }),
-      audience: 'http://localhost:3001/',
-      issuer: 'https://dev-sqqag002.us.auth0.com/',
-      algorithms: [ 'RS256' ]
+      audience: config.JWT_AUDIENCE,
+      issuer: config.JWT_ISSUER,
+      algorithms: config.JWT_ALGORITHMS
 });
+
 exports.initRabbit = async () => {
     const s = amqpUri({
         ssl: false,

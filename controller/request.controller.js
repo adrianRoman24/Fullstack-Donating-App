@@ -28,7 +28,7 @@ exports.getByRefugee = async (req) => {
 // create new request
 exports.create = async(req) => {
     try {
-        const created = await Request.create({
+        const request = await Request.create({
             offerId: req.body.offerId,
             donorEmail: req.body.donorEmail,
             refugeeEmail: req.body.refugeeEmail,
@@ -39,7 +39,7 @@ exports.create = async(req) => {
         });
         return {
             result: {
-                request: created,
+                request,
             },
         }
     } catch (error) {
@@ -112,11 +112,13 @@ exports.update = async (req) => {
             }
         } else {
             // update request
-            const updated = await request.update({
+            const updatedRequest = await request.update({
                 status: "rejected",
             });
             return {
-                request: updated,
+                result: {
+                    request: updatedRequest,
+                },
             }
         }
     } catch (error) {
