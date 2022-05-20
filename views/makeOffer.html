@@ -8,6 +8,47 @@
     <meta charset="utf-8">
     <title>Main menu</title>
 </head>
+<script src="../lib/functions.inc.js"></script>
+<script src="https://cdn.auth0.com/js/auth0-spa-js/1.19/auth0-spa-js.production.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+<script>
+// The Auth0 client, initialized in configureClient()
+  let auth0 = null;
+const configureClient = async () => {
+  auth0 = await createAuth0Client(
+    fetchCredentials()
+  );
+};
+
+window.onload = async () => {
+await configureClient();
+
+const isAuthenticated = await auth0.isAuthenticated();
+const usr = await auth0.getUser();
+console.log(usr);
+var emailParam = document.getElementById('donorEmail');
+emailParam.value = usr.email;
+if (isAuthenticated) {
+  console.log("> User is authenticated");
+  return;
+}
+
+console.log("> User not authenticated");
+const query = window.location.search;
+if (query.includes("code=") && query.includes("state=")) {
+
+  // Process the login state
+  await auth0.handleRedirectCallback();
+
+  // Use replaceState to redirect the user away and remove the querystring parameters
+  window.history.replaceState({}, document.title, "/");
+}
+
+};
+
+</script>
+
 <body>
 
 
@@ -26,9 +67,12 @@
 <section class="signup-form">
     <h2><span id="blueColor">Create offer</span></h2>
     <form action="/api/offer/publish" method="post">
-        <input type="text" name="donorEmail" placeholder="Type...">
+        <input type="hidden" id="donorEmail" name="donorEmail" value="nu@yahoo.com">
+        <h2 style="color:black;">Type:</h2>
         <input type="text" name="type" placeholder="Type...">
+        <h2 style="color:black;">Description:</h2>
         <input type="text" name="description" placeholder="Type...">
+        <h2 style="color:black;">Location:</h2>
         <input type="text" name="location" placeholder="Type...">
         <h2 style="color : black;" id="sliderValue"></h2>
         <div class="slidecontainer">

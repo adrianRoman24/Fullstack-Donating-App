@@ -13,10 +13,9 @@
 // The Auth0 client, initialized in configureClient()
   let auth0 = null;
 const configureClient = async () => {
-  auth0 = await createAuth0Client({
-    domain: "dev-b9s90wxq.us.auth0.com",
-    client_id: "4UeZo7p9CcBC1xzAX3yqLmRTNLn0igu7"
-  });
+  auth0 = await createAuth0Client(
+    fetchCredentials()
+  );
 };
 
 window.onload = async () => {
@@ -26,6 +25,7 @@ const isAuthenticated = await auth0.isAuthenticated();
 const usr = await auth0.getUser();
 console.log(usr);
 if (isAuthenticated) {
+  
   console.log("> User is authenticated");
   return;
 }
@@ -51,7 +51,7 @@ if (query.includes("code=") && query.includes("state=")) {
       <div  id="logo">
         <div id="logo_text">
           <!-- class="logo_colour", allows you to change the colour of the text -->
-          <h3 style="top:50px; position:relative;"><a href="index.html"><span class="logo_colour" style="font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif">Tom Hardy</span></a></h3>
+          <h3 style="top:50px; position:relative;"><a href="/views/donor/profile"><span class="logo_colour" style="font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif">Tom Hardy</span></a></h3>
         </div>
       </div>
       
