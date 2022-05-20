@@ -21,7 +21,6 @@ async function main() {
     app.engine('html', require('ejs').renderFile);
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: false }));
-   // app.use(helmet());
     
     // initialize routes
     require("../routes")(app);

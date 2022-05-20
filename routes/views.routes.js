@@ -6,11 +6,12 @@ module.exports = (app) => {
     router.use(express.static(path.join(__dirname, '/../public')));
 
     router.get("/homepage", (_, res) => {
-        res.render(path.join(__dirname, "../views/homepage.html"));
+
+        res.sendFile(path.join(__dirname, "../views/homepage.html"));
     });
 
     router.get("/donor/homepage", (_, res) => {
-        res.render(path.join(__dirname, "../views/donor_homepage.html"));
+        res.sendFile(path.join(__dirname, "../views/donor_homepage.html"));
     });
 
     router.get("/donor/profile", (_, res) => {
