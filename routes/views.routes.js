@@ -50,6 +50,10 @@ module.exports = (app) => {
         res.sendFile(path.join(__dirname, "../views/view_requests.html"));
     });
     
+    router.get("/request/create", (_, res) => {
+        res.sendFile(path.join(__dirname, "../views/makeRequest.html"));
+    });
+    
     router.get("/request/my_requests", (_, res) => {
         res.sendFile(path.join(__dirname, "../views/my_requests.html"));
     });
