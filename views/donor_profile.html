@@ -1,7 +1,7 @@
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="lib/functions.inc.js"></script>
+<script src="../lib/functions.inc.js"></script>
 
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -10,15 +10,69 @@
     <title>Profile</title>
     <link rel="shortcut icon" type="image/jpg" href="favicon1.png"/>
 </head>
+<script src="https://cdn.auth0.com/js/auth0-spa-js/1.19/auth0-spa-js.production.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+<script>
+// The Auth0 client, initialized in configureClient()
+  let auth0 = null;
+const configureClient = async () => {
+  auth0 = await createAuth0Client(
+      fetchCredentials()
+  );
+};
+
+window.onload = async () => {
+await configureClient();
+
+const isAuthenticated = await auth0.isAuthenticated();
+const usr = await auth0.getUser();
+console.log(usr);
+if (isAuthenticated) {
+  console.log("> User is authenticated");
+  var res = await getProfileInfo(auth0);
+  res = res.result.donor;
+  var data = {};
+  for (let i = 0; i <= 2; i ++)
+    data[i] = {};
+  data[0].title = "Personal info";
+  data[0].body = res.personalInformation;
+  data[1].title = "Contact info";
+  data[1].body = "Phone: " + res.phone + ", Address: " + res.address;
+  data[2].title = "Looking for ";
+  data[2].body = res.lookingFor + " TBD nu intoarce lookingfor";
+  var ratingEl = document.getElementById('rating');
+  ratingEl.innerHTML = res.rating;
+  var genderEl = document.getElementById('gender');
+  genderEl.innerHTML = res.sex;
+  console.log(res);
+  displayEntries(data);
+  return;
+}
+
+console.log("> User not authenticated");
+const query = window.location.search;
+if (query.includes("code=") && query.includes("state=")) {
+
+  // Process the login state
+  await auth0.handleRedirectCallback();
+
+  // Use replaceState to redirect the user away and remove the querystring parameters
+  window.history.replaceState({}, document.title, "/");
+}
+
+};
+
+</script>
 <body>
-<link rel="stylesheet" href="style/profile.css">
+<link rel="stylesheet" href="../style/profile.css">
 <div class="container">
     <div class="row profile">
         <div class="col-md-3">
             <div class="profile-sidebar fadeInDown" id="formContent">
                 <!-- SIDEBAR USERPIC -->
                 <div class="profile-userpic">
-                    <img src='style/3.jpg' class='img-responsive' alt=''>
+                    <img src='../style/3.jpg' class='img-responsive' alt=''>
                     
 
                 </div>
@@ -29,7 +83,7 @@
                         Tom Hardy
                     </div>
                     <div class="profile-usertitle-job">
-                        Refugee
+                        Donor
                     </div>
                 </div>
                 <!-- END SIDEBAR USER TITLE -->
@@ -42,7 +96,7 @@
                 <div class="profile-usermenu">
                     <ul class="nav">
                         <li>
-                            <a href="../header.php">
+                            <a href="/views/donor/homepage">
                                 <i class="glyphicon glyphicon-arrow-left"></i>
                                 Main Page </a>
                         </li>
@@ -51,13 +105,18 @@
                                 <i class="glyphicon glyphicon-home"></i>
                                 Overview </a>
                         </li>
-                        <li>
-                            <a href="changePhoto.php">
-                                <i class="glyphicon glyphicon-user"></i>
-                                Change photo </a>
+                        <li class="active">
+                            <a href="#">
+                                <i ></i>
+                                Rating: <span id="rating"></span></a>
+                        </li>
+                        <li class="active">
+                            <a href="#">
+                                <i ></i>
+                                Gender: <span id="gender"></span></a>
                         </li>
                         <li>
-                            <a href='./../includes/logout.inc.php'>
+                            <a onClick="logoutButton(auth0);">
                                 <i class="glyphicon glyphicon-flag"></i>
                                 Logout </a>
                         </li>
@@ -66,28 +125,62 @@
                 <!-- END MENU -->
             </div>
         </div>
+     
         <div class="col-md-9">
             <div style="background:#149CF0;"class="profile-content">
-                <div>
-                    <p><span id="dotsName1">Personal info</span><span id="dots1">...</span><span id="more1">I am a refugee from Odessa, Ukraine seeking shelter in Bucharest, Romania</span></p>
-                    <button onclick="toggleRead(1)" id="myBtn1">Read more</button>
-                </div>
+                
+                <!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - Accordion</title>
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css'><link rel="stylesheet" href="../style/viewOffers.css">
 
-                <div>
-                <p><span id="dotsName2">Contact info</span><span id="dots2">...</span><span id="more2">Whatever</span></p>
-                <button onclick="toggleRead(2)" id="myBtn2">Read more</button>
-                </div>
+</head>
+<body> 
+    <script>
+         function addItem(title, body) {
+            var acc = document.getElementById("accordionMain");
+            var itemDiv = document.createElement('div');
+            itemDiv.className = "accordion__item js-accordion-item";
+            acc.appendChild(itemDiv);
+            var headerDiv =  document.createElement('div');
+            headerDiv.className="accordion-header js-accordion-header";
+            headerDiv.innerHTML = title;
+            itemDiv.appendChild(headerDiv);
+            var bodyDiv = document.createElement('div');
+            bodyDiv.className = "accordion-body js-accordion-body";
+            itemDiv.appendChild(bodyDiv);
+            var contentDiv = document.createElement('div');
+            contentDiv.className = "accordion-body__contents";
+            contentDiv.innerHTML = body;
+            bodyDiv.appendChild(contentDiv);
+         }
+    </script>
+<!-- partial:index.partial.html -->
+<div class="accordion js-accordion" id="accordionMain">
+    <script>
+        function displayEntries(data) {
+            for(let i = 0; i < 3; i++) {
+                var title = data[i].title;
+                var body = data[i].body;
+                addItem(title, body);
+            }
+            updateAccordion();
+        }
+    </script>
+</div><!-- end of accordion -->
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
 
-                <div>   
-                <p><span id="dotsName3">More info</span><span id="dots3">...</span><span id="more3">Whatever</span></p>
-                <button onclick="toggleRead(3)" id="myBtn3">Read more</button>
-                </div>
+</body>
+</html>
+
 
             </div>
         </div>
     </div>
 </div>
-<center>
-</center>
 <br>
 <br>

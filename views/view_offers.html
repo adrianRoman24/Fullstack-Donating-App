@@ -1,8 +1,46 @@
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="../lib/functions.inc.js"></script>
+<script src="https://cdn.auth0.com/js/auth0-spa-js/1.19/auth0-spa-js.production.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+<script>
+// The Auth0 client, initialized in configureClient()
+  let auth0 = null;
+const configureClient = async () => {
+  auth0 = await createAuth0Client(
+      fetchCredentials()
+  );
+};
 
+window.onload = async () => {
+await configureClient();
 
+const isAuthenticated = await auth0.isAuthenticated();
+const usr = await auth0.getUser();
+console.log(usr);
+if (isAuthenticated) {
+  var res = await viewOffers(auth0);
+  displayEntries(res);
+  console.log("> User is authenticated");
+  return;
+}
+
+console.log("> User not authenticated");
+const query = window.location.search;
+if (query.includes("code=") && query.includes("state=")) {
+
+  // Process the login state
+  await auth0.handleRedirectCallback();
+
+  // Use replaceState to redirect the user away and remove the querystring parameters
+  window.history.replaceState({}, document.title, "/");
+}
+
+};
+
+</script>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
@@ -17,17 +55,17 @@
             <div class="profile-sidebar fadeInDown" id="formContent">
                 <!-- SIDEBAR USERPIC -->
                 <div class="profile-userpic">
-                    <img src='style/3.jpg' class='img-responsive' alt=''>
+                    <img src='../style/3.jpg' class='img-responsive' alt=''>
                     
 
                 </div>
                 <!-- END SIDEBAR USERPIC -->
                 <!-- SIDEBAR USER TITLE -->
                 <div class="profile-usertitle">
-                    <div class="profile-usertitle-name">
+                    <div class="profile-usertitle-name" id="nameTitle">
                         Tom Hardy
                     </div>
-                    <div class="profile-usertitle-job">
+                    <div class="profile-usertitle-job" id="accountTypeTitle">
                         Refugee
                     </div>
                 </div>
@@ -74,52 +112,48 @@
   <meta charset="UTF-8">
   <title>CodePen - Accordion</title>
   <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
-<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css'><link rel="stylesheet" href="style/viewOffers.css">
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css'><link rel="stylesheet" href="../style/viewOffers.css">
 
 </head>
 <body> 
     <script>
-          function addItem(title, body) {
-    var acc = document.getElementById("accordionMain");
-    var itemDiv = document.createElement('div');
-    itemDiv.className = "accordion__item js-accordion-item";
-    acc.appendChild(itemDiv);
-    var headerDiv =  document.createElement('div');
-    headerDiv.className="accordion-header js-accordion-header";
-    headerDiv.innerHTML = title;
-    itemDiv.appendChild(headerDiv);
-    var bodyDiv = document.createElement('div');
-    bodyDiv.className = "accordion-body js-accordion-body";
-    itemDiv.appendChild(bodyDiv);
-    var contentDiv = document.createElement('div');
-    contentDiv.className = "accordion-body__contents";
-    contentDiv.innerHTML = body;
-    bodyDiv.appendChild(contentDiv);
-  }
-    </script>
+        function addItem(title, desc, count, date) {
+           var acc = document.getElementById("accordionMain");
+           var itemDiv = document.createElement('div');
+           itemDiv.className = "accordion__item js-accordion-item";
+           acc.appendChild(itemDiv);
+           var headerDiv =  document.createElement('div');
+           headerDiv.className="accordion-header js-accordion-header";
+           headerDiv.innerHTML = title;
+           itemDiv.appendChild(headerDiv);
+           var bodyDiv = document.createElement('div');
+           bodyDiv.className = "accordion-body js-accordion-body";
+           itemDiv.appendChild(bodyDiv);
+           var contentDiv = document.createElement('div');
+           contentDiv.className = "accordion-body__contents";
+           contentDiv.innerHTML =
+            desc + "<br>Count: "+ count+"<br> Date: " + date;
+           bodyDiv.appendChild(contentDiv);
+        }
+   </script>
 <!-- partial:index.partial.html -->
 <div class="accordion js-accordion" id="accordionMain">
     <script>
-    addItem("Offer, Baia Mare", "I can provide accomodation for 10 people at my villa");
-    addItem("Offer, Ramnicu Valcea", "I can provide accomodation for 10 people at my villa");
-    addItem("Offer, Bucharest", "I can provide accomodation for 10 people at my villa");
-    addItem("Offer, Brasov", "I can provide accomodation for 10 people at my villa");
-    addItem("Offer, Iasi", "I can provide accomodation for 10 people at my villa");
-    addItem("Offer, Vaslui", "I can provide accomodation for 10 people at my villa");
-    addItem("Offer, Cluj", "I can provide accomodation for 10 people at my villa");
-    addItem("Offer, Bucharest", "I can provide accomodation for 10 people at my villa");
-    // await axios({
-    //     method: get,
-    //     url: "",
-    //     // body
-    //     data: {
-    //         donorEmail,
-    //     },
-    //     headers: {
-    //         Authorization: `Bearer ${token}`,
-    //     }
-    // })
-    
+        let reqsData = {
+        };
+        function displayEntries(data) {
+            reqsData = data.result;
+            console.log("balaur");
+            console.log(reqsData.offers.length);
+            for(let i = 0; i < reqsData.offers.length; i++) {
+                var req = reqsData.offers[i];
+                var title = "";
+                title = title + "Offer in: " + req.location + " of type: " + req.type;
+                
+                addItem(title, req.description, req.capacity, req.date);
+            }
+            updateAccordion();
+        }
     </script>
 </div><!-- end of accordion -->
 <!-- partial -->

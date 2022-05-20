@@ -21,7 +21,7 @@ const isAuthenticated = await auth0.isAuthenticated();
 const usr = await auth0.getUser();
 console.log(usr);
 if (isAuthenticated) {
-  var res = await viewPendingRequests(auth0);
+  var res = await viewMyRequests(auth0);
   displayEntries(res);
   console.log("> User is authenticated");
   return;
