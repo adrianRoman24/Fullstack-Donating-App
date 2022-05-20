@@ -16,7 +16,8 @@
   const configureClient = async () => {
     auth0 = await createAuth0Client({
       domain: "dev-sqqag002.us.auth0.com",
-      client_id: "goxwRqT3y1zl78JTmTwaQPz3EIicW0zk"
+      client_id: "goxwRqT3y1zl78JTmTwaQPz3EIicW0zk",
+      audience: "http://localhost:3001",
     });
   };
 
@@ -34,14 +35,12 @@
   console.log(usr);
   if (isAuthenticated) {
     console.log("> User is authenticated");
-   
     return;
   }
 
   console.log("> User not authenticated");
   const query = window.location.search;
   if (query.includes("code=") && query.includes("state=")) {
-
     // Process the login state
     await auth0.handleRedirectCallback();
 
@@ -50,16 +49,6 @@
 }
 
 };
-
-//_----------------------------------
-
-
-
-
-
-
-//_----------------------------------
-
 
 </script>
 <body>

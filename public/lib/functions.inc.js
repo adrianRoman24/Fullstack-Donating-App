@@ -242,5 +242,6 @@ const viewOffers = async (auth0) => {
 function fetchCredentials() {
   return {
     domain: "dev-sqqag002.us.auth0.com",
-    client_id: "goxwRqT3y1zl78JTmTwaQPz3EIicW0zk"};
+    client_id: "goxwRqT3y1zl78JTmTwaQPz3EIicW0zk",
+    audience: "http://localhost:3001",};
 }

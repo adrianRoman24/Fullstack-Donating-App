@@ -2,14 +2,16 @@ module.exports = (app) => {
     const router = require("express").Router();
     const path = require("path");
     const express = require("express");
+    const { log } = require("../src/utils");
 
     router.use(express.static(path.join(__dirname, '/../public')));
 
+    // added as login callback
     router.get("/homepage", (_, res) => {
-
         res.sendFile(path.join(__dirname, "../views/homepage.html"));
     });
 
+    // added as login callback
     router.get("/donor/homepage", (_, res) => {
         res.sendFile(path.join(__dirname, "../views/donor_homepage.html"));
     });
@@ -18,7 +20,8 @@ module.exports = (app) => {
         res.sendFile(path.join(__dirname, "../views/donor_profile.html"));
     });
 
-    router.get("/refugee/homepage", (_, res) => {
+    // added as login callback
+    router.get("/refugee/homepage", (req, res) => {
         res.sendFile(path.join(__dirname, "../views/refugee_homepage.html"));
     });
 
@@ -30,6 +33,7 @@ module.exports = (app) => {
         res.sendFile(path.join(__dirname, "../views/login.html"));
     });
 
+    // added as login callback
     router.get("/signup", (_, res) => {
         res.sendFile(path.join(__dirname, "../views/signup.html"));
     });

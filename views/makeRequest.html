@@ -28,34 +28,33 @@ const configureClient = async () => {
 };
 
 window.onload = async () => {
-await configureClient();
+  await configureClient();
 
-const isAuthenticated = await auth0.isAuthenticated();
-const usr = await auth0.getUser();
-console.log(usr);
-var emailParam = document.getElementById('refugeeEmail');
-var offerId = document.getElementById('offerId');
-offerId.value = params.offerid;
+  const isAuthenticated = await auth0.isAuthenticated();
+  const usr = await auth0.getUser();
+  console.log(usr);
+  var emailParam = document.getElementById('refugeeEmail');
+  var offerId = document.getElementById('offerId');
+  offerId.value = params.offerid;
 
-emailParam.value = usr.email;
-if (isAuthenticated) {
-  console.log("> User is authenticated");
-  return;
-}
+  emailParam.value = usr.email;
+  if (isAuthenticated) {
+    console.log("> User is authenticated");
+    return;
+  }
 
-console.log("> User not authenticated");
-const query = window.location.search;
-if (query.includes("code=") && query.includes("state=")) {
+  console.log("> User not authenticated");
+  const query = window.location.search;
+  if (query.includes("code=") && query.includes("state=")) {
 
-  // Process the login state
-  await auth0.handleRedirectCallback();
+    // Process the login state
+    await auth0.handleRedirectCallback();
 
-  // Use replaceState to redirect the user away and remove the querystring parameters
-  window.history.replaceState({}, document.title, "/");
-}
+    // Use replaceState to redirect the user away and remove the querystring parameters
+    window.history.replaceState({}, document.title, "/");
+  }
 
 };
-
 </script>
 
 <body>
