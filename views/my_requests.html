@@ -21,7 +21,8 @@ const isAuthenticated = await auth0.isAuthenticated();
 const usr = await auth0.getUser();
 console.log(usr);
 if (isAuthenticated) {
-  var res = await viewMyRequests(auth0);
+  document.getElementById('nameTitle').innerHTML = usr.email;
+  var res = await viewMyRequests(auth0, usr.mail);
   displayEntries(res);
   console.log("> User is authenticated");
   return;
@@ -62,8 +63,8 @@ if (query.includes("code=") && query.includes("state=")) {
                 <!-- END SIDEBAR USERPIC -->
                 <!-- SIDEBAR USER TITLE -->
                 <div class="profile-usertitle">
-                    <div class="profile-usertitle-name">
-                        Tom Hardy
+                    <div id ="nameTitle" class="profile-usertitle-name">
+                   
                     </div>
                     <div class="profile-usertitle-job">
                         Refugee

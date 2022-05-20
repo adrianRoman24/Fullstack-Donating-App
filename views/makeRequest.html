@@ -33,12 +33,15 @@ window.onload = async () => {
   const isAuthenticated = await auth0.isAuthenticated();
   const usr = await auth0.getUser();
   console.log(usr);
-  var emailParam = document.getElementById('refugeeEmail');
+  var refugeeParam = document.getElementById('refugeeEmail');
+  var donorParam = document.getElementById('donorEmail');
   var offerId = document.getElementById('offerId');
   offerId.value = params.offerid;
+  donorParam.value = params.donoremail;
 
   emailParam.value = usr.email;
   if (isAuthenticated) {
+    refugeeParam.value = usr.email;
     console.log("> User is authenticated");
     return;
   }

@@ -26,9 +26,11 @@ await configureClient();
 
 const isAuthenticated = await auth0.isAuthenticated();
 const usr = await auth0.getUser();
+var accType = usr['http://Donating-App/roles'][0];
 console.log(usr);
 var emailParam = document.getElementById('donorEmail');
 emailParam.value = usr.email;
+
 if (isAuthenticated) {
   console.log("> User is authenticated");
   return;

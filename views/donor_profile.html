@@ -27,10 +27,13 @@ await configureClient();
 
 const isAuthenticated = await auth0.isAuthenticated();
 const usr = await auth0.getUser();
+var accType = usr['http://Donating-App/roles'][0];
+  
 console.log(usr);
 if (isAuthenticated) {
   console.log("> User is authenticated");
-  var res = await getProfileInfo(auth0);
+  document.getElementById('nameTitle').innerHTML = usr.email;
+  var res = await getProfileInfo(auth0, accType, usr.email);
   res = res.result.donor;
   var data = {};
   for (let i = 0; i <= 2; i ++)
@@ -41,6 +44,7 @@ if (isAuthenticated) {
   data[1].body = "Phone: " + res.phone + ", Address: " + res.address;
   data[2].title = "Looking for ";
   data[2].body = res.lookingFor + " TBD nu intoarce lookingfor";
+  
   var ratingEl = document.getElementById('rating');
   ratingEl.innerHTML = res.rating;
   var genderEl = document.getElementById('gender');
@@ -79,8 +83,8 @@ if (query.includes("code=") && query.includes("state=")) {
                 <!-- END SIDEBAR USERPIC -->
                 <!-- SIDEBAR USER TITLE -->
                 <div class="profile-usertitle">
-                    <div class="profile-usertitle-name">
-                        Tom Hardy
+                    <div id="nameTitle" class="profile-usertitle-name">
+                        
                     </div>
                     <div class="profile-usertitle-job">
                         Donor
@@ -96,7 +100,7 @@ if (query.includes("code=") && query.includes("state=")) {
                 <div class="profile-usermenu">
                      <ul class="nav">
                         <li>
-                            <a href="/views/refugee/homepage">
+                            <a href="/views/donor/homepage">
                                 <i class="glyphicon glyphicon-arrow-left"></i>
                                 Main Page </a>
                         </li>
