@@ -43,8 +43,6 @@ if (isAuthenticated) {
   data[0].body = res.personalInformation;
   data[1].title = "Contact info";
   data[1].body = "Phone: " + res.phone + ", Address: " + res.address;
-  data[2].title = "Looking for ";
-  data[2].body = res.lookingFor + " TBD nu intoarce lookingfor";
   
   var ratingEl = document.getElementById('rating');
   ratingEl.innerHTML = res.rating;
@@ -168,7 +166,7 @@ if (query.includes("code=") && query.includes("state=")) {
 <div class="accordion js-accordion" id="accordionMain">
     <script>
         function displayEntries(data) {
-            for(let i = 0; i < 3; i++) {
+            for(let i = 0; i < 2; i++) {
                 var title = data[i].title;
                 var body = data[i].body;
                 addItem(title, body);

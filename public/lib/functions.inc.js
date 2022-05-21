@@ -300,6 +300,10 @@ const formSendOffer = async (auth0, data) => {
   
     // Fetch the JSON result
     const responseData = await response.json();
+    if(responseData.result)
+      confirm("Offer published");
+    else 
+      confirm("Something went wrong");
     location.href="/views/donor/homepage";
     console.log(responseData);
     return responseData;
@@ -325,6 +329,10 @@ const formSendRequest = async (auth0, data) => {
   
     // Fetch the JSON result
     const responseData = await response.json();
+    if(responseData.result)
+      confirm("Request created");
+    else 
+      confirm("Something went wrong");
     location.href="/views/refugee/homepage";
     return responseData;
   
