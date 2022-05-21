@@ -35,12 +35,9 @@
     document.getElementById('homeButton').style.visibility = "visible";
     document.getElementById('homeLink').href = "/views/" + accType + "/homepage";
     
-  }
-  if (isAuthenticated) {
-    console.log("> User is authenticated");
-    
-    return;
-  }
+  } else {
+  loginButton(auth0);
+}
 
   console.log("> User not authenticated");
   const query = window.location.search;

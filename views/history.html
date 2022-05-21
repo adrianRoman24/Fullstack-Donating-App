@@ -20,15 +20,18 @@ await configureClient();
 const isAuthenticated = await auth0.isAuthenticated();
 const usr = await auth0.getUser();
 var accType = usr['http://Donating-App/roles'][0];
-  
+  accType ="donor";
 console.log(usr);
 if (isAuthenticated) {
-  document.getElementById('nameTitle').innerHTML = usr.email;
+  document.getElementById('nameTitle').innerHTML = usr.name;
+  document.getElementById('profilePhoto').src = usr.picture;
   var res = await viewHistory(auth0, usr.email, accType);
   console.log(res);
   displayEntries(res);
   console.log("> User is authenticated");
   return;
+} else {
+  loginButton(auth0);
 }
 
 console.log("> User not authenticated");
@@ -59,7 +62,7 @@ if (query.includes("code=") && query.includes("state=")) {
             <div class="profile-sidebar fadeInDown" id="formContent">
                 <!-- SIDEBAR USERPIC -->
                 <div class="profile-userpic">
-                    <img src='style/3.jpg' class='img-responsive' alt=''>
+                    <img  id="profilePhoto" class='img-responsive' alt=''>
                     
 
                 </div>
@@ -126,7 +129,7 @@ if (query.includes("code=") && query.includes("state=")) {
 </head>
 <body> 
     <script>
-         function addItem(title, oid, rid) {
+         function addItem(title, location, descOffer, count, descReq, date, created) {
             var acc = document.getElementById("accordionMain");
             var itemDiv = document.createElement('div');
             itemDiv.className = "accordion__item js-accordion-item";
@@ -140,23 +143,28 @@ if (query.includes("code=") && query.includes("state=")) {
             itemDiv.appendChild(bodyDiv);
             var contentDiv = document.createElement('div');
             contentDiv.className = "accordion-body__contents";
-            contentDiv.innerHTML = "<br>OfferID: "+ oid+"<br> RequestID: " + rid;
+            contentDiv.innerHTML = "<br>Offer details: "+ descOffer+"<br> Request details: " + descReq
+            + "<br> Location: "+location + "<br> Count: " + count + "<br> Date of request: " + date + "<br> Accepted at " + created;
             bodyDiv.appendChild(contentDiv);
          }
     </script>
 <!-- partial:index.partial.html -->
-<div class="accordion js-accordion" id="accordionMain">
+<div class="accordion js-accordion" id="accordionMain"><h1 id="foundAlert"></h1>
     <script>
         let reqsData = {
         };
-        function displayEntries(data) {
+        function displayEntries(data) {  
             reqsData = data.result.history;
+            
+            if (reqsData.length == 0)
+                document.getElementById('foundAlert').innerHTML = "No entries found";
+
             for(let i = 0; i < reqsData.length; i++) {
                 var req = reqsData[i];
                 var title = "";
                 title = title + "Interaction between " + req.donorEmail + " and " + req.refugeeEmail;
                 
-                addItem(title, req.offerId, req.requestId);
+                addItem(title, req.offer.location, req.offer.description, req.request.count, req.request.description, req.request.date, req.createdAt);
             }
             updateAccordion();
         }

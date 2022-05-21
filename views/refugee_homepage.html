@@ -25,9 +25,12 @@ const isAuthenticated = await auth0.isAuthenticated();
 const usr = await auth0.getUser();
 console.log(usr);
 if (isAuthenticated) {
-  document.getElementById('nameTitle').innerHTML = usr.email;
+  document.getElementById('nameTitle').innerHTML = usr.name;
+  document.getElementById('profilePhoto').src = usr.picture;
   console.log("> User is authenticated");
   return;
+} else {
+  loginButton(auth0);
 }
 
 console.log("> User not authenticated");
@@ -47,7 +50,7 @@ if (query.includes("code=") && query.includes("state=")) {
 <body >
   <div id="main">
     <div id="header" style="background:#7dc2ec;" >
-        <img src="../style/3.jpg" style="float:left;width:90px;height:90px; top:30px; left:100px; position:relative; border-radius: 95%;">
+        <img id="profilePhoto" style="float:left;width:90px;height:90px; top:30px; left:100px; position:relative; border-radius: 95%;">
       <div  id="logo">
         <div id="logo_text">
           <!-- class="logo_colour", allows you to change the colour of the text -->

@@ -44,7 +44,9 @@ window.onload = async () => {
     refugeeParam.value = usr.email;
     console.log("> User is authenticated");
     return;
-  }
+  } else {
+  loginButton(auth0);
+}
 
   console.log("> User not authenticated");
   const query = window.location.search;

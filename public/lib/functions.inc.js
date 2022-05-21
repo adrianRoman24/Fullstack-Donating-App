@@ -197,22 +197,26 @@ try {
 const acceptRequest = async (auth0, requestId) => {
 
 try {
-
 const token = await auth0.getTokenSilently();
 console.log(token);
 
 const response = await fetch("/api/request/update", {
   method: "put",
   body: JSON.stringify({
-      requestId,
-      accept: true,
+    requestId,
+    accept: true,
   }),
   headers: {
+    'Content-Type': `application/json`,
     Authorization: `Bearer ${token}`,
   },
 });
 
 const responseData = await response.json();
+if(responseData.result.request.status == "accepted")
+  confirm("Request accepted");
+else 
+  confirm("Something went wrong");
 location.reload();
 } catch (e) {
 // Display errors in the console
@@ -220,6 +224,39 @@ console.error(e);
 }
 }
 
+
+
+const rejectRequest = async (auth0, requestId) => {
+
+  try {
+  
+  const token = await auth0.getTokenSilently();
+  console.log(token);
+  
+  const response = await fetch("/api/request/update", {
+    method: "PUT",
+    body: JSON.stringify({
+        requestId,
+        accept: false,
+    }),
+    headers: {    
+      'Content-Type': `application/json`,
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  
+  const responseData = await response.json();
+  if(responseData.result.request.status == "rejected")
+  confirm("Request rejected");
+  else 
+  confirm("Something went wrong");
+  location.reload();
+  } catch (e) {
+  // Display errors in the console
+  console.error(e);
+  }
+}
+  
 const viewHistory = async (auth0, mail, type) => {
 
 try {

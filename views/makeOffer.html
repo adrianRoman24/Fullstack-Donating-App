@@ -34,6 +34,8 @@ emailParam.value = usr.email;
 if (isAuthenticated) {
   console.log("> User is authenticated");
   return;
+} else {
+  loginButton(auth0);
 }
 
 console.log("> User not authenticated");
@@ -49,6 +51,13 @@ if (query.includes("code=") && query.includes("state=")) {
 
 };
 
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear();
+
+  today = yyyy + "/" + mm +'/' + dd ;
+  console.log(today);
 </script>
 
 <body>
@@ -81,9 +90,8 @@ if (query.includes("code=") && query.includes("state=")) {
             <input type="range" min="1" max="100" value="50" class="slider" id="myRange" name="capacity">
         </div>
         <h1 style="float: left;">Date:</h1>
-        <input style="position:relative; top:20px;" type="date" id="date" name="date"
-            value="2018-07-22"
-            min="2018-01-01" max="2018-12-31">
+        <input  style="position:relative; top:20px;" type="date" id="date" name="date"
+            min="2022-01-01" max="2022-12-31">
         <button type="submit" name="submit" class="btn btn-success btn-sm" id="sign-up-button" style="width:150px; 
         position: absolute;
         left:150px;
@@ -94,6 +102,7 @@ if (query.includes("code=") && query.includes("state=")) {
     var slider = document.getElementById("myRange");
     var output = document.getElementById("sliderValue");
     output.innerHTML = slider.value; // Display the default slider value
+    document.getElementById('date').value = today;
 
     // Update the current slider value (each time you drag the slider handle)
     slider.oninput = function() {

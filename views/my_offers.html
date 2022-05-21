@@ -22,10 +22,13 @@ const usr = await auth0.getUser();
 console.log(usr);
 if (isAuthenticated) {
   var res = await viewMyOffers(auth0, usr.email);
-  document.getElementById('nameTitle').innerHTML = usr.email;
+  document.getElementById('profilePhoto').src = usr.picture;
+  document.getElementById('nameTitle').innerHTML = usr.name;
   displayEntries(res);
   console.log("> User is authenticated");
   return;
+} else {
+  loginButton(auth0);
 }
 
 console.log("> User not authenticated");
@@ -56,7 +59,7 @@ if (query.includes("code=") && query.includes("state=")) {
             <div class="profile-sidebar fadeInDown" id="formContent">
                 <!-- SIDEBAR USERPIC -->
                 <div class="profile-userpic">
-                    <img src='../style/3.jpg' class='img-responsive' alt=''>
+                    <img id="profilePhoto" class='img-responsive' alt=''>
                     
 
                 </div>
@@ -142,13 +145,16 @@ if (query.includes("code=") && query.includes("state=")) {
          }
     </script>
 <!-- partial:index.partial.html -->
-<div class="accordion js-accordion" id="accordionMain">
+<div class="accordion js-accordion" id="accordionMain"><h1 id="foundAlert"></h1>
     <script>
         let reqsData = {
         };
         function displayEntries(data) {
             reqsData = data.result;
-            
+        
+            if (reqsData.offers.length == 0)
+                document.getElementById('foundAlert').innerHTML = "No requests found";
+
             for(let i = 0; i < reqsData.offers.length; i++) {
                 var req = reqsData.offers[i];
                 var title = "";

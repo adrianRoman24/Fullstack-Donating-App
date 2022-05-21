@@ -104,11 +104,11 @@ ol li
   margin-right: auto;}
 
 #header
-{ background: #ffffff url(back.png) repeat-x;
+{ 
   height: 177px;}
   
 #banner
-{  background: transparent url(banner.jpg) no-repeat;
+{
   width: 860px;
   height: 180px;
   margin-bottom: 20px;
@@ -159,7 +159,7 @@ ul#menu li
   padding: 0 0 0 9px;
   list-style: none;
   margin: 1px 2px 0 0;
-  background: #5A5A5A url(tab.png) no-repeat 0 0;}
+  background: #5A5A5A  no-repeat 0 0;}
 
 ul#menu li a
 { font: normal 100% 'trebuchet ms', sans-serif;
@@ -170,7 +170,7 @@ ul#menu li a
   text-align: center;
   color: #FFF;
   text-decoration: none;
-  background: #5A5A5A url(tab.png) no-repeat 100% 0;} 
+  background: #5A5A5A no-repeat 100% 0;} 
 
 ul#menu li.selected a
 { height: 20px;
@@ -178,10 +178,10 @@ ul#menu li.selected a
 
 ul#menu li.selected
 { margin: 1px 2px 0 0;
-  background: #00C6F0 url(tab_selected.png) no-repeat 0 0;}
+  background: #00C6F0 no-repeat 0 0;}
 
 ul#menu li.selected a, ul#menu li.selected a:hover
-{ background: #00C6F0 url(tab_selected.png) no-repeat 100% 0;
+{ background: #00C6F0 no-repeat 100% 0;
   color: #FFF;}
 
 ul#menu li a:hover
@@ -200,12 +200,12 @@ ul#menu li a:hover
 .sidebar_top
 { width: 222px;
   height: 14px;
-  background: transparent url(side_top.png) no-repeat;}
+  background: transparent no-repeat;}
 
 .sidebar_base
 { width: 222px;
   height: 14px;
-  background: url(side_base.png) no-repeat;}
+  background:no-repeat;}
 
 .sidebar
 { float: right;
@@ -214,7 +214,7 @@ ul#menu li a:hover
   margin: 0 0 16px 0;}
 
 .sidebar_item
-{ background: url(side_back.png) repeat-y;
+{ background:repeat-y;
   padding: 0 15px;
   width: 192px;}
 
@@ -235,7 +235,7 @@ ul#menu li a:hover
 
 #content ul li, .sidebar ul li
 { list-style-type: none;
-  background: url(bullet.png) no-repeat;
+  background:  no-repeat;
   margin: 0 0 0 0; 
   padding: 0 0 4px 25px;
   line-height: 1.5em;}
@@ -247,7 +247,7 @@ ul#menu li a:hover
   height: 80px;
   padding: 28px 0 5px 0;
   text-align: center; 
-  background: #3B3939 url(footer.png) repeat-x;
+  background: #3B3939  repeat-x;
   color: #A8AA94;}
 
 #footer p

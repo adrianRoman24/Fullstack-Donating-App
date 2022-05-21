@@ -33,6 +33,7 @@ console.log(usr);
 if (isAuthenticated) {
   console.log("> User is authenticated");
   document.getElementById('nameTitle').innerHTML = usr.email;
+  document.getElementById('profilePhoto').src = usr.picture;
   var res = await getProfileInfo(auth0, accType, usr.email);
   res = res.result.donor;
   var data = {};
@@ -52,6 +53,8 @@ if (isAuthenticated) {
   console.log(res);
   displayEntries(data);
   return;
+} else {
+  loginButton(auth0);
 }
 
 console.log("> User not authenticated");
@@ -76,7 +79,7 @@ if (query.includes("code=") && query.includes("state=")) {
             <div class="profile-sidebar fadeInDown" id="formContent">
                 <!-- SIDEBAR USERPIC -->
                 <div class="profile-userpic">
-                    <img src='../style/3.jpg' class='img-responsive' alt=''>
+                    <img  id="profilePhoto" class='img-responsive' alt=''>
                     
 
                 </div>

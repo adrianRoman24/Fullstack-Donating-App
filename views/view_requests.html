@@ -20,12 +20,16 @@ await configureClient();
 const isAuthenticated = await auth0.isAuthenticated();
 const usr = await auth0.getUser();
 console.log(usr);
+
 if (isAuthenticated) {
-  document.getElementById('nameTitle').innerHTML = usr.email;
+  document.getElementById('nameTitle').innerHTML = usr.name;
+  document.getElementById('profilePhoto').src = usr.picture;
   var res = await viewPendingRequests(auth0, usr.email);
   displayEntries(res);
   console.log("> User is authenticated");
   return;
+} else {
+  loginButton(auth0);
 }
 
 console.log("> User not authenticated");
@@ -56,7 +60,7 @@ if (query.includes("code=") && query.includes("state=")) {
             <div class="profile-sidebar fadeInDown" id="formContent">
                 <!-- SIDEBAR USERPIC -->
                 <div class="profile-userpic">
-                    <img src='../style/3.jpg' class='img-responsive' alt=''>
+                    <img id="profilePhoto" class='img-responsive' alt=''>
                     
 
                 </div>
@@ -116,7 +120,7 @@ if (query.includes("code=") && query.includes("state=")) {
 <html lang="en" >
 <head>
   <meta charset="UTF-8">
-  <title>CodePen - Accordion</title>
+  <title>CodePen - Accordion</title> 
   <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css'><link rel="stylesheet" href="../style/viewOffers.css">
 
@@ -139,18 +143,22 @@ if (query.includes("code=") && query.includes("state=")) {
             contentDiv.className = "accordion-body__contents";
             contentDiv.innerHTML =
              desc + "<br>Count: "+ count+"<br> Date: " + date +
-            "<br> <button type='button' class='btn btn-danger btn-sm'><a onClick='acceptRequest(auth0," + requestId + ");'>Accept request</a></button>";
+            "<br> <button type='button' class='btn btn-danger btn-sm'><a onClick='acceptRequest(auth0," + requestId + ");'>Accept request</a></button>"
+            + "<button type='button' style='float: right;' class='btn btn-danger btn-sm'><a onClick='rejectRequest(auth0," + requestId + ");'>Reject request</a></button>";
             bodyDiv.appendChild(contentDiv);
          }
     </script>
 <!-- partial:index.partial.html -->
-<div class="accordion js-accordion" id="accordionMain">
+<div class="accordion js-accordion" id="accordionMain"> <h1 id="foundAlert"></h1>
     <script>
          let reqsData = {
         };
         function displayEntries(data) {
             reqsData = data.result;
-            console.log(reqsData.requests.length);
+            
+            if (reqsData.requests.length == 0)
+                document.getElementById('foundAlert').innerHTML = "No requests found";
+
             for(let i = 0; i < reqsData.requests.length; i++) {
                 var req = reqsData.requests[i];
                 var title = "";
