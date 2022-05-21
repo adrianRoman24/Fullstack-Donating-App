@@ -60,6 +60,13 @@ window.onload = async () => {
   }
 
 };
+
+var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); 
+  var yyyy = today.getFullYear();
+
+  today = yyyy + "/" + mm +'/' + dd ;
 </script>
 
 <body>
@@ -104,6 +111,7 @@ window.onload = async () => {
     slider.max = params.maxcount;
     var output = document.getElementById("sliderValue");
     output.innerHTML = slider.value; // Display the default slider value
+    document.getElementById('date').value = today;
 
     // Update the current slider value (each time you drag the slider handle)
     slider.oninput = function() {

@@ -25,6 +25,9 @@ console.log(usr);
 if (isAuthenticated) {
   document.getElementById('nameTitle').innerHTML = usr.name;
   document.getElementById('profilePhoto').src = usr.picture;
+  document.getElementById('profileButton').onclick= function() {
+    location.href= '/views/'+accType+'/profile';
+  };
   var res = await viewHistory(auth0, usr.email, accType);
   console.log(res);
   displayEntries(res);
@@ -79,7 +82,7 @@ if (query.includes("code=") && query.includes("state=")) {
                 <!-- END SIDEBAR USER TITLE -->
                 <!-- SIDEBAR BUTTONS -->
                 <div class="profile-userbuttons">
-                    <button type='button' class='btn btn-danger btn-sm'>Message</button>
+                    <button type='button' class='btn btn-danger btn-sm' id="profileButton">My profile</button>
                 </div>
                 <!-- END SIDEBAR BUTTONS -->
                 <!-- SIDEBAR MENU -->
@@ -95,16 +98,7 @@ if (query.includes("code=") && query.includes("state=")) {
                                 <i class="glyphicon glyphicon-home"></i>
                                 Overview </a>
                         </li>
-                        <li class="active">
-                            <a href="#">
-                                <i ></i>
-                                Rating: <span id="rating"></span></a>
-                        </li>
-                        <li class="active">
-                            <a href="#">
-                                <i ></i>
-                                Gender: <span id="gender"></span></a>
-                        </li>
+              
                         <li>
                             <a onClick="logoutButton(auth0);">
                                 <i class="glyphicon glyphicon-flag"></i>
