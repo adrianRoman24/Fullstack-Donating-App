@@ -23,7 +23,7 @@ console.log(usr);
 if (isAuthenticated) {
   document.getElementById('nameTitle').innerHTML = usr.name;
   document.getElementById('profilePhoto').src = usr.picture;
-  var res = await viewMyRequests(auth0, usr.mail);
+  var res = await viewMyRequests(auth0, usr.email);
   displayEntries(res);
   console.log("> User is authenticated");
   return;

@@ -155,7 +155,7 @@ try {
 
 const viewMyRequests = async (auth0, mail) => { 
 try {
-
+  console.log(mail);
   const token = await auth0.getTokenSilently();
 
   const response = await fetch("/api/request/view?email=" + mail, {
