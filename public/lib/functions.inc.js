@@ -286,3 +286,77 @@ return {
   client_id: "Riup2s3V38r2h62HymL4c3eKnhMndu52",
   audience: "Donating-App",};
 }
+
+const formSendOffer = async (auth0, data) => { 
+  try {
+    const token = await auth0.getTokenSilently();
+    const response = await fetch("/api/offer/publish", {
+      method: "post",
+      body: data,
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+  
+    // Fetch the JSON result
+    const responseData = await response.json();
+    location.href="/views/donor/homepage";
+    console.log(responseData);
+    return responseData;
+  
+  } catch (e) {
+    // Display errors in the console
+    console.error(e);
+  }
+  };
+
+  
+const formSendRequest = async (auth0, data) => { 
+  try {
+    
+    const token = await auth0.getTokenSilently();
+    const response = await fetch("/api/request/create", {
+      method: "post",
+      body: data,
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+  
+    // Fetch the JSON result
+    const responseData = await response.json();
+    location.href="/views/refugee/homepage";
+    return responseData;
+  
+  } catch (e) {
+    // Display errors in the console
+    console.error(e);
+  }
+  };
+
+  
+const formSendUser = async (auth0, data) => { 
+  try {
+    var apiLink;
+    const aType = document.getElementById( "accType" ).value;
+    if (aType == "refugee")
+      apiLink = "/api/refugee/register";
+    else apiLink ="/api/donor/register"; 
+
+    const token = await auth0.getTokenSilently();
+    const response = await fetch(apiLink, {
+      method: "post",
+      body: data,
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+  
+    const responseData = await response.json();
+    location.href="/views/homepage";
+    return responseData;
+  
+  } catch (e) {
+    console.error(e);
+  }
+  };

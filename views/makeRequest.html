@@ -39,7 +39,7 @@ window.onload = async () => {
   offerId.value = params.offerid;
   donorParam.value = params.donoremail;
 
-  emailParam.value = usr.email;
+  refugeeParam.value = usr.email;
   if (isAuthenticated) {
     refugeeParam.value = usr.email;
     console.log("> User is authenticated");
@@ -79,7 +79,7 @@ window.onload = async () => {
 <!-- Login Form -->
 <section class="signup-form">
     <h2><span id="blueColor">Create request</span></h2>
-    <form action="/api/request/create" method="post">
+    <form action="/api/request/create" method="post" id="signupForm">
       <input type="hidden" id="refugeeEmail" name="refugeeEmail" value="nu@yahoo.com">
       <input type="hidden" id="donorEmail" name="donorEmail" value="nu@yahoo.com">
       <input type="hidden" id="offerId" name="offerId" value="nu@yahoo.com">
@@ -109,6 +109,14 @@ window.onload = async () => {
     slider.oninput = function() {
     output.innerHTML = this.value;
     }
+
+    const form = document.getElementById( "signupForm" );
+
+    form.addEventListener( "submit", function ( event ) {
+      event.preventDefault();
+      const data = new URLSearchParams(new FormData(form));
+      formSendRequest(auth0, data);
+    } );
 </script>
 </section>
 		

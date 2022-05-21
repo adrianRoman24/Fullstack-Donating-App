@@ -18,7 +18,7 @@ module.exports = (app) => {
         res.send(result);
     });
 
-    router.post("/publish", async (req, res) => {
+    router.post("/publish", jwtCheck, async (req, res) => {
         log(`Publish offer: ${JSON.stringify(req.body)}`);
         if (!"location" in req.body || !"donorEmail" in req.body || !"type" in req.body
             || !"description" in req.body || !"capacity" in req.body) {
@@ -29,7 +29,7 @@ module.exports = (app) => {
         }
         const result = await offer.add(req);
         log(result);
-        res.redirect("/views/donor/homepage");
+        res.send(result);
     });
 
     router.get("/view", jwtCheck, async (req, res) => {

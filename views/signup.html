@@ -8,6 +8,53 @@
     <meta charset="utf-8">
     <title>Main menu</title>
 </head>
+
+<script src="lib/functions.inc.js"></script>
+<script src="https://cdn.auth0.com/js/auth0-spa-js/1.19/auth0-spa-js.production.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+<script>
+
+  const params = new Proxy(new URLSearchParams(window.location.search), {
+  get: (searchParams, prop) => searchParams.get(prop),
+});
+
+
+// The Auth0 client, initialized in configureClient()
+  let auth0 = null;
+const configureClient = async () => {
+  auth0 = await createAuth0Client(
+    fetchCredentials()
+  );
+};
+
+window.onload = async () => {
+  await configureClient();
+
+  const isAuthenticated = await auth0.isAuthenticated();
+  const usr = await auth0.getUser();
+  console.log(usr);
+  if (isAuthenticated) {
+    const mailParam = document.getElementById( "mailParam" );
+    mailParam.value = usr.email;
+    console.log("> User is authenticated");
+    return;
+  } else {
+}
+
+  console.log("> User not authenticated");
+  const query = window.location.search;
+  if (query.includes("code=") && query.includes("state=")) {
+
+    // Process the login state
+    await auth0.handleRedirectCallback();
+
+    // Use replaceState to redirect the user away and remove the querystring parameters
+    window.history.replaceState({}, document.title, "/");
+  }
+
+};
+</script>
 <body>
 
 <link rel="stylesheet" href="style/signup.css">
@@ -24,19 +71,33 @@
 <!-- Login Form -->
 <section class="signup-form">
     <h2><span id="blueColor">Sign Up</span></h2>
-    <form action="/todo" method="post">
+    <form action="/todo" method="post" id="signupForm"> 
         <input type="text" name="name" placeholder="Full name...">
-        <input type="text" name="email" placeholder="Email..."><br>
-        <h2><span id="blueColor">Account type:</span></h2><br>
-        <input type="checkbox" id="refugee" name="refugee" value="Refugee">
-        <label for="refugee"> Refugee</label><br>
-        <input type="checkbox" id="donor" name="donor" value="Donor">
-        <label for="donor"> Donor</label><br>
-        <input type="password" name="pwd" placeholder="Password...">
-        <input type="password" name="pwdrepeat" placeholder="Confirm password..."><br>
+        <input type="text" name="sex" placeholder="Gender..."><br>
+        <input type="text" name="personalInformation" placeholder="Personal info..."><br>
+        <input type="text" name="phone" placeholder="Phone..."><br>
+        <input type="text" name="address" placeholder="Address..."><br>
+        <input type="text" name="lookingFor" placeholder="Looking for..."><br>
+        <label id="blueColor"  for="cars">Account type:</label>
+        <select name="accType" id="accType">
+          <option value="refugee">Refugee</option>
+          <option value="donor">Donor</option>
+        </select>
+        <input style="visibility: hidden;" id="mailParam" type="text" name="email" placeholder="Email...">
+        
         <button type="submit" name="submit" class="btn btn-success btn-sm" id="sign-up-button" style="width:150px;">Create account</button>
     </form>
 </section>
+
+<script>
+        const form = document.getElementById( "signupForm" );
+
+        form.addEventListener( "submit", function ( event ) {
+            event.preventDefault();
+            const data = new URLSearchParams(new FormData(form));
+            formSendUser(auth0, data);
+        } );
+</script>
 		
 
 		
