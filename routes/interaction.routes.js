@@ -5,7 +5,7 @@ module.exports = (app) => {
 
     const router = require("express").Router();
 
-    router.get("/history", async (req, res) => {
+    router.get("/history", jwtCheck, async (req, res) => {
         log(`History: ${JSON.stringify(req.query)}`);
         if (!"email" in req.query || !"accountType" in req.query) {
             res.status(400);

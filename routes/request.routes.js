@@ -6,7 +6,7 @@ module.exports = async (app) => {
     
     const router = require("express").Router();
 
-    router.get("/view", async (req, res) => {
+    router.get("/view", jwtCheck, async (req, res) => {
         log(`View request: ${JSON.stringify(req.query)}`);
         if (!"email" in req.query) {
             req.status(400);
@@ -32,7 +32,7 @@ module.exports = async (app) => {
         res.send(result);
     });
 
-    router.post("/create", async (req, res) => {
+    router.post("/create", jwtCheck, async (req, res) => {
         log(`Create request: ${JSON.stringify(req.body)}`);
         if (!"offerId" in req.body || !"refugeeEmail" in req.body || !"description" in req.body
             || !"count" in req.body || !"date" in req.body || !"donorEmail" in req.body) {
@@ -56,7 +56,7 @@ module.exports = async (app) => {
         }
     });
 
-    router.put("/update", async (req, res) => {
+    router.put("/update", jwtCheck, async (req, res) => {
         log(`Update request: ${JSON.stringify(req.body)}`);
         if (!"requestId" in req.body || !"accept" in req.body) {
             res.status(400);

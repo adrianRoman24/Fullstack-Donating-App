@@ -5,13 +5,13 @@ module.exports = (app) => {
 
     const router = require("express").Router();
 
-    router.post("/register", async (req, res) => {
+    router.post("/register", jwtCheck, async (req, res) => {
         log(`Register refugee: ${JSON.stringify(req.body)}`);
         const result = await refugee.create(req);
         res.send(result);
     });
 
-    router.get("/profile", async (req, res) => {
+    router.get("/profile", jwtCheck, async (req, res) => {
         log(`Profile refugee: ${JSON.stringify(req.query)}`);
         if (!"email" in req.query) {
             res.status(400);
