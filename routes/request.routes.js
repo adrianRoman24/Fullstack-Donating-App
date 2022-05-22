@@ -19,7 +19,7 @@ module.exports = async (app) => {
         res.send(result);
     });
 
-    router.get("/viewPending", async (req, res) => {
+    router.get("/viewPending", jwtCheck, async (req, res) => {
         log(`View pending requests: ${JSON.stringify(req.query)}`);
         if (!"donorEmail" in req.query) {
             req.status(400);

@@ -5,7 +5,7 @@ module.exports = (app) => {
 
     const router = require("express").Router();
 
-    router.get("/viewAll", async (req, res) => {
+    router.get("/viewAll", jwtCheck, async (req, res) => {
         log(`View all offers: ${JSON.stringify(req.query)}`);
         if (!"offset" in req.query) {
             res.status(400);
@@ -18,7 +18,7 @@ module.exports = (app) => {
         res.send(result);
     });
 
-    router.post("/publish",  async (req, res) => {
+    router.post("/publish", jwtCheck, async (req, res) => {
         log(`Publish offer: ${JSON.stringify(req.body)}`);
         if (!"location" in req.body || !"donorEmail" in req.body || !"type" in req.body
             || !"description" in req.body || !"capacity" in req.body) {
