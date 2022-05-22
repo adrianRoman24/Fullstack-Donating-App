@@ -68,10 +68,7 @@ var today = new Date();
 
   today = yyyy + "/" + mm +'/' + dd ;
 </script>
-
-<body>
-
-
+<body style=" background-size: cover; background-image: url('../assets/imgs/war.jpg'); ">
 <link rel="stylesheet" href="../style/makeOffer.css">
 <div class="wrapper fadeInDown">
     <div id="formContent" style="background:#c2deec;">
@@ -91,7 +88,7 @@ var today = new Date();
       <input type="hidden" id="donorEmail" name="donorEmail" value="nu@yahoo.com">
       <input type="hidden" id="offerId" name="offerId" value="nu@yahoo.com">
         <h2 style="color:black;">Description:</h2>
-        <input type="text" name="description" placeholder="Type...">
+        <input type="text" name="description" placeholder="Type..."><br>
         <h2 style="color : black;" id="sliderValue"></h2>
         <div class="slidecontainer">
             <input type="range" min="1" max="100" value="50" class="slider" id="myRange" name="count">
@@ -116,7 +113,7 @@ var today = new Date();
 
     // Update the current slider value (each time you drag the slider handle)
     slider.oninput = function() {
-    output.innerHTML = this.value;
+    output.innerHTML = "Count: " + this.value;
     }
 
     const form = document.getElementById( "signupForm" );

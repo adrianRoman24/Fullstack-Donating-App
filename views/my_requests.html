@@ -52,7 +52,7 @@ if (query.includes("code=") && query.includes("state=")) {
     <title>Profile</title>
     <link rel="shortcut icon" type="image/jpg" href="favicon1.png"/>
 </head>
-<body>
+<body style=" background-size: cover; background-image: url('../assets/imgs/war.jpg'); ">
 <div class="container">
     <div class="row profile">
         <div class="col-md-3">
@@ -75,9 +75,6 @@ if (query.includes("code=") && query.includes("state=")) {
                 </div>
                 <!-- END SIDEBAR USER TITLE -->
                 <!-- SIDEBAR BUTTONS -->
-                <div class="profile-userbuttons">
-                    <button type='button' class='btn btn-danger btn-sm' onClick="location.href= '/views/refugee/profile'">My profile</button>
-                </div>
                 <!-- END SIDEBAR BUTTONS -->
                 <!-- SIDEBAR MENU -->
                 <div class="profile-usermenu">
@@ -87,10 +84,10 @@ if (query.includes("code=") && query.includes("state=")) {
                                 <i class="glyphicon glyphicon-arrow-left"></i>
                                 Main Page </a>
                         </li>
-                        <li class="active">
-                            <a href="#">
+                        <li >
+                            <a href="/views/refugee/profile">
                                 <i class="glyphicon glyphicon-home"></i>
-                                Overview </a>
+                                My profile </a>
                         </li>
         
                         <li>

@@ -1,11 +1,15 @@
-<!DOCTYPE HTML>
-<html>
-
-<head >
-  <title>First official donating site in Romania</title>
-  <link rel="stylesheet" type="text/css" href="../style/style_refugee.css" />
-</head>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="../lib/functions.inc.js"></script>
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr" >
+<head>
+    <meta charset="utf-8">
+    <title>Profile</title>
+    <link rel="shortcut icon" type="image/jpg" href="favicon1.png"/>
+</head>
 <script src="https://cdn.auth0.com/js/auth0-spa-js/1.19/auth0-spa-js.production.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
@@ -14,7 +18,7 @@
   let auth0 = null;
 const configureClient = async () => {
   auth0 = await createAuth0Client(
-    fetchCredentials()
+      fetchCredentials()
   );
 };
 
@@ -23,11 +27,15 @@ await configureClient();
 
 const isAuthenticated = await auth0.isAuthenticated();
 const usr = await auth0.getUser();
+var accType = usr['http://Donating-App/roles'][0];
+accType = "refugee";
 console.log(usr);
 if (isAuthenticated) {
-  document.getElementById('nameTitle').innerHTML = usr.name;
-  document.getElementById('profilePhoto').src = usr.picture;
   console.log("> User is authenticated");
+  document.getElementById('nameTitle').innerHTML = usr.email;
+  document.getElementById('profilePhoto').src = usr.picture;
+  res = res.result.donor;
+  var data = {};
   return;
 } else {
   loginButton(auth0);
@@ -47,29 +55,63 @@ if (query.includes("code=") && query.includes("state=")) {
 };
 
 </script>
-<body >
-  <div id="main">
-    <div id="header" style="background:#7dc2ec;" >
-        <img id="profilePhoto" style="float:left;width:90px;height:90px; top:30px; left:100px; position:relative; border-radius: 95%;">
-      <div  id="logo">
-        <div id="logo_text">
-          <!-- class="logo_colour", allows you to change the colour of the text -->
-          <h3 style="top:50px; position:relative;"><a href="/views/refugee/profile"><span  id="nameTitle" class="logo_colour" style="font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif"></span></a></h3>
+<body style=" background-size: cover; background-image: url('../assets/imgs/war.jpg'); ">
+<link rel="stylesheet" href="../style/style_refugee.css">
+<div class="container">
+    <div class="row profile">
+        <div class="col-md-3">
+            <div class="profile-sidebar fadeInDown" id="formContent">
+                <div class="profile-userpic">
+                    <img  id="profilePhoto" class='img-responsive' alt=''>
+                </div>
+                <div class="profile-usertitle">
+                    <div id="nameTitle" class="profile-usertitle-name">
+                        
+                    </div>
+                    <div class="profile-usertitle-job">
+                        Refugee
+                    </div>
+                </div>
+                <div class="profile-userbuttons">
+                </div>
+                <div class="profile-usermenu">
+                     <ul class="nav">
+                        <li>
+                            <a href="/views/homepage">
+                                <i class="glyphicon glyphicon-arrow-left"></i>
+                                Main Page </a>
+                        </li>
+                        <li >
+                            <a href="/views/refugee/profile">
+                                <i class="glyphicon glyphicon-home"></i>
+                                My profile </a>
+                        </li>
+                        <li>
+                            <a onClick="logoutButton(auth0);">
+                                <i class="glyphicon glyphicon-flag"></i>
+                                Logout </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- END MENU -->
+            </div>
         </div>
-      </div>
-      
-          <ul id="menu" >
-            <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
-            <li style="background:#149CF0; float:none; left: 100px; top:100px; position:relative;border-radius: 25%;"><a style="background:#149CF0; border-radius: 25%;" href="/views/offer/view">View offers</a></li>
-            <li style="float:none; left: 100px; top:120px; position:relative; border-radius: 25%;"><a style="padding: 6px 320px 5px 28px; background:#149CF0; background:#149CF0; border-radius: 25%;" href="/views/request/my_requests">My requests</a></li>
-            <li style="float:none; left: 100px; top:140px; position:relative; border-radius: 25%;"><a style="background:#149CF0; border-radius: 25%;" href="/views/history">History</a></li>
-            <li style="float:none; left: 100px; top:160px; position:relative; border-radius: 25%; "><a style="padding: 6px 100px 5px 28px; background:#149CF0; border-radius: 25%;" href="/views/homepage">Homepage</a></li>
-            <li style="float:none; left: 125px; top:160px; position:relative; border-radius: 25%;"><a style="padding: 6px 100px 5px 28px; background:#149CF0; border-radius: 25%;" onClick="logoutButton(auth0);" >Sign out</a></li>
-          </ul>
-          <img src="../style/4.png" style="float:left;width:300px;height:200px; top:130px; left:300px; position:relative; ">
-      
+     
+        <div class="col-md-9">
+            <div style="background:#149cf000; height:700px;"class="profile-content" >
+                            
+              <ul id="menu" >
+                <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
+                <li style="visibility: hidden; float:none; left: 100px; position:relative;"><button style="visibility: visible; max-width:500px;" class="button-21" role="button"><a href="/views/offer/view">View offers</a></button></li>
+                <li style="visibility: hidden; float:none; left: 100px; top:20px; position:relative;"><button style="visibility: visible; max-width:500px;" class="button-21" role="button"><a href="/views/request/my_requests">My requests</a></button></li>
+                <li style="visibility: hidden; float:none; left: 100px; top:40px; position:relative;"><button style="visibility: visible; max-width:500px;" class="button-21" role="button"><a href="/views/history">History</a></button></li>
+                <li style="visibility: hidden; float:none; left: 100px; top:60px; position:relative;"><button style="visibility: visible; max-width:500px;" class="button-21" role="button"><a href="/views/homepage">Homepage</a></button></li>
+                <li style="visibility: hidden; float:none; left: 100px; top:70px; position:relative;"><button style="visibility: visible; max-width:500px;" class="button-21" role="button"><a  onClick="logoutButton(auth0);" >Sign out</a></button></li>
+              </ul>
+
+            </div>
+        </div>
     </div>
-     <div id="content_header"></div>
-   
-</body>
-</html>
+</div>
+<br>
+<br>

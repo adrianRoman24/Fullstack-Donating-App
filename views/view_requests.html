@@ -53,7 +53,7 @@ if (query.includes("code=") && query.includes("state=")) {
     <title>Profile</title>
     <link rel="shortcut icon" type="image/jpg" href="favicon1.png"/>
 </head>
-<body>
+<body style=" background-size: cover; background-image: url('../assets/imgs/war.jpg'); ">
 <div class="container">
     <div class="row profile">
         <div class="col-md-3">
@@ -89,10 +89,10 @@ if (query.includes("code=") && query.includes("state=")) {
                                 Main Page </a>
                         </li>
     
-                        <li class="active">
-                            <a href="#">
+                        <li >
+                            <a href="/views/donor/profile">
                                 <i ></i>
-                                Gender: <span id="gender"></span></a>
+                                My profile </a>
                         </li>
                         <li>
                             <a onClick="logoutButton(auth0);">
