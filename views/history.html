@@ -27,9 +27,9 @@ if (isAuthenticated) {
   document.getElementById('profileButton').onclick= function() {
     location.href= '/views/'+accType+'/profile';
   };
-  var res = await viewHistory(auth0, usr.email, accType);
+  //var res = await viewHistory(auth0, usr.email, accType);
   console.log(res);
-  displayEntries(res);
+  //displayEntries(res);
   console.log("> User is authenticated");
   return;
 } else {

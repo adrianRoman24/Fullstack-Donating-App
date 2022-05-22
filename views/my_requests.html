@@ -147,7 +147,7 @@ if (query.includes("code=") && query.includes("state=")) {
             for(let i = 0; i < reqsData.requests.length; i++) {
                 var req = reqsData.requests[i];
                 var title = "";
-                title = title + "Request from: " + req.refugeeEmail;
+                title = title + "Request to: " + req.donorEmail;
                 
                 addItem(title, req.description, req.count, req.date);
             }
