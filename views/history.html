@@ -83,7 +83,7 @@ if (query.includes("code=") && query.includes("state=")) {
                 <!-- END SIDEBAR BUTTONS -->
                 <!-- SIDEBAR MENU -->
                 <div class="profile-usermenu">
-                    <ul class="nav">
+                    <ul class="nav" >
                         <li>
                             <a href="/views/homepage">
                                 <i class="glyphicon glyphicon-arrow-left"></i>
@@ -95,7 +95,7 @@ if (query.includes("code=") && query.includes("state=")) {
                                 My profile </a>
                         </li>
               
-                        <li>
+                        <li style="position:relative; right:9px;">
                             <a onClick="logoutButton(auth0);">
                                 <i class="glyphicon glyphicon-flag"></i>
                                 Logout </a>
@@ -144,12 +144,16 @@ if (query.includes("code=") && query.includes("state=")) {
         let reqsData = {
         };
         function displayEntries(data) {  
-            if (data.result)
-                reqsData = data.result.history;
-
-            if (!data.result)
+            if (data.result) {
+                if (!data.result.history.length) {
+                    console.log(data.result.history)
+                    document.getElementById('foundAlert').innerHTML = "No entries found";
+                } else {
+                    reqsData = data.result.history;
+                }
+            } else
                 document.getElementById('foundAlert').innerHTML = "No entries found";
-
+                
             for(let i = 0; i < reqsData.length; i++) {
                 var req = reqsData[i];
                 var title = "";
