@@ -59,7 +59,8 @@ if (query.includes("code=") && query.includes("state=")) {
   today = yyyy + "/" + mm +'/' + dd ;
 </script>
 
-<body>
+<body style=" background-size: cover; background-image: url('../assets/imgs/war.jpg'); ">
+
 
 
 <link rel="stylesheet" href="../style/makeOffer.css">
@@ -83,7 +84,7 @@ if (query.includes("code=") && query.includes("state=")) {
         <h2 style="color:black;">Description:</h2>
         <input type="text" name="description" placeholder="Type...">
         <h2 style="color:black;">Location:</h2>
-        <input type="text" name="location" placeholder="Type...">
+        <input type="text" name="location" placeholder="Type..."><br>
         <h2 style="color : black;" id="sliderValue"></h2>
         <div class="slidecontainer">
             <input type="range" min="1" max="100" value="50" class="slider" id="myRange" name="capacity">
@@ -100,7 +101,7 @@ if (query.includes("code=") && query.includes("state=")) {
 <script>
     var slider = document.getElementById("myRange");
     var output = document.getElementById("sliderValue");
-    output.innerHTML = slider.value; // Display the default slider value
+    output.innerHTML = "Capacity: " +slider.value; // Display the default slider value
     document.getElementById('date').value = today;
 
     // Update the current slider value (each time you drag the slider handle)

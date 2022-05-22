@@ -33,8 +33,8 @@ if (isAuthenticated) {
   console.log("> User is authenticated");
   document.getElementById('nameTitle').innerHTML = usr.name;   
   document.getElementById('profilePhoto').src = usr.picture;
-  var res = await getProfileInfo(auth0, accType, usr.email);
-  res = res.result.donor;
+  var res = await getProfileInfo(auth0, "refugee", usr.email);
+  res = res.result.refugee;
   var data = {};
   for (let i = 0; i <= 2; i ++)
     data[i] = {};
@@ -43,7 +43,7 @@ if (isAuthenticated) {
   data[1].title = "Contact info";
   data[1].body = "Phone: " + res.phone + ", Address: " + res.address;
   data[2].title = "Looking for ";
-  data[2].body = res.lookingFor + " TBD nu intoarce lookingfor";
+  data[2].body = res.lookingFor;
   var ratingEl = document.getElementById('rating');
   ratingEl.innerHTML = res.rating;
   var genderEl = document.getElementById('gender');
@@ -69,7 +69,7 @@ if (query.includes("code=") && query.includes("state=")) {
 };
 
 </script>
-<body>
+<body style=" background-size: cover; background-image: url('../assets/imgs/war.jpg'); ">
 <link rel="stylesheet" href="../style/profile.css">
 <div class="container">
     <div class="row profile">

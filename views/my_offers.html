@@ -20,7 +20,11 @@ await configureClient();
 const isAuthenticated = await auth0.isAuthenticated();
 const usr = await auth0.getUser();
 console.log(usr);
+var accType = usr['http://Donating-App/roles'][0];
 if (isAuthenticated) {
+  if(accType == "refugee")
+    location.href = "/views/homepage";
+
   var res = await viewMyOffers(auth0, usr.email);
   document.getElementById('profilePhoto').src = usr.picture;
   document.getElementById('nameTitle').innerHTML = usr.name;
@@ -52,7 +56,7 @@ if (query.includes("code=") && query.includes("state=")) {
     <title>Profile</title>
     <link rel="shortcut icon" type="image/jpg" href="favicon1.png"/>
 </head>
-<body>
+<body style=" background-size: cover; background-image: url('../assets/imgs/war.jpg'); ">
 <div class="container">
     <div class="row profile">
         <div class="col-md-3">
@@ -72,13 +76,6 @@ if (query.includes("code=") && query.includes("state=")) {
                         Donor
                     </div>
                 </div>
-                <!-- END SIDEBAR USER TITLE -->
-                <!-- SIDEBAR BUTTONS -->
-                <div class="profile-userbuttons">
-                    <button type='button' class='btn btn-danger btn-sm' onClick="location.href= '/views/donor/profile'">My profile</button>
-                </div>
-                <!-- END SIDEBAR BUTTONS -->
-                <!-- SIDEBAR MENU -->
                 <div class="profile-usermenu">
                     <ul class="nav">
                         <li>
@@ -86,10 +83,10 @@ if (query.includes("code=") && query.includes("state=")) {
                                 <i class="glyphicon glyphicon-arrow-left"></i>
                                 Main Page </a>
                         </li>
-                        <li class="active">
-                            <a href="#">
+                        <li >
+                            <a href="/views/donor/profile">
                                 <i class="glyphicon glyphicon-home"></i>
-                                Overview </a>
+                                My profile </a>
                         </li>
          
                         <li>

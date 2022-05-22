@@ -110,7 +110,7 @@ const getProfileInfo = async (auth0, accType, mail) => {
 try {
 
   const token = await auth0.getTokenSilently();
-  const response = await fetch("/api/donor/profile?accountType="+accType+"&email="+mail, {
+  const response = await fetch("/api/"+accType+"/profile?accountType="+accType+"&email="+mail, {
     headers: {
       Authorization: `Bearer ${token}`
     }
@@ -367,3 +367,31 @@ const formSendUser = async (auth0, data) => {
     console.error(e);
   }
   };
+
+  const getToken = async (auth0) => { 
+    try {
+      const token = await auth0.getTokenSilently();
+      const response = await fetch("https://dev-sqqag002.us.auth0.com/oauth/token", {
+        method: "post",
+        body : JSON.stringify({
+          grant_type: 'client_credentials',
+          client_id: 'Riup2s3V38r2h62HymL4c3eKnhMndu52',
+          client_secret: 'Flxs4aw0SlzEKUTKL27Cr_Ww9VsdxkWRFdI47OcllspvjtZXjp6tacEqFoYtRizx',
+          audience: 'Donating-App'
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+          'content-type': 'application/x-www-form-urlencoded'
+        }
+      });
+    
+      // Fetch the JSON result
+      const responseData = await response.json();
+      //console.log(responseData);
+      return responseData;
+    
+    } catch (e) {
+      // Display errors in the console
+      console.error(e);
+    }
+    };
