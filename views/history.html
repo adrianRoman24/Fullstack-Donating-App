@@ -89,7 +89,7 @@ if (query.includes("code=") && query.includes("state=")) {
                                 <i class="glyphicon glyphicon-arrow-left"></i>
                                 Main Page </a>
                         </li>
-                        <li class="active">
+                        <li >
                             <a href="#" id="profileButton">
                                 <i class="glyphicon glyphicon-home"></i>
                                 My profile </a>
@@ -144,9 +144,10 @@ if (query.includes("code=") && query.includes("state=")) {
         let reqsData = {
         };
         function displayEntries(data) {  
-            reqsData = data.result.history;
-            
-            if (reqsData.length == 0)
+            if (data.result)
+                reqsData = data.result.history;
+
+            if (!data.result)
                 document.getElementById('foundAlert').innerHTML = "No entries found";
 
             for(let i = 0; i < reqsData.length; i++) {

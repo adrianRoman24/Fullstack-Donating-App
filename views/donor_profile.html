@@ -32,7 +32,7 @@ var accType = usr['http://Donating-App/roles'][0];
 console.log(usr);
 if (isAuthenticated) {
   console.log("> User is authenticated");
-  document.getElementById('nameTitle').innerHTML = usr.email;
+  document.getElementById('nameTitle').innerHTML = usr.name;
   document.getElementById('profilePhoto').src = usr.picture;
   var res = await getProfileInfo(auth0, accType, usr.email);
   res = res.result.donor;
@@ -42,10 +42,8 @@ if (isAuthenticated) {
   data[0].title = "Personal info";
   data[0].body = res.personalInformation;
   data[1].title = "Contact info";
-  data[1].body = "Phone: " + res.phone + ", Address: " + res.address;
+  data[1].body = "Phone: " + res.phone + "<br> Address: " + res.address + "<br>My email: " + res.email;
   
-  var ratingEl = document.getElementById('rating');
-  ratingEl.innerHTML = res.rating;
   var genderEl = document.getElementById('gender');
   genderEl.innerHTML = res.sex;
   console.log(res);
@@ -99,11 +97,6 @@ if (query.includes("code=") && query.includes("state=")) {
                             <a href="#">
                                 <i class="glyphicon glyphicon-home"></i>
                                 Overview </a>
-                        </li>
-                        <li class="active">
-                            <a href="#">
-                                <i ></i>
-                                Rating: <span id="rating"></span></a>
                         </li>
                         <li class="active">
                             <a href="#">
