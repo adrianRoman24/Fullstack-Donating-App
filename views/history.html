@@ -27,9 +27,9 @@ if (isAuthenticated) {
   document.getElementById('profileButton').onclick= function() {
     location.href= '/views/'+accType+'/profile';
   };
-  //var res = await viewHistory(auth0, usr.email, accType);
+  var res = await viewHistory(auth0, usr.email, accType);
   console.log(res);
-  //displayEntries(res);
+  displayEntries(res);
   console.log("> User is authenticated");
   return;
 } else {
@@ -89,7 +89,7 @@ if (query.includes("code=") && query.includes("state=")) {
                                 <i class="glyphicon glyphicon-arrow-left"></i>
                                 Main Page </a>
                         </li>
-                        <li class="active">
+                        <li >
                             <a href="#" id="profileButton">
                                 <i class="glyphicon glyphicon-home"></i>
                                 My profile </a>
