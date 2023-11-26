@@ -14,6 +14,7 @@
     "RABBIT_VHOST": "/",
     "RABBIT_QUEUE": "alerting-queue",
     "MAIL_USER": "adrian.roman.donating.app@gmail.com",
-    "MAIL_PASSWORD": "123456789AAa-",
-    "MAIL_SERVICE": "gmail"
+    "MAIL_PASSWORD": "kgco phgn ndax tqdt",
+    "MAIL_HOST": "smtp.gmail.com",
+    "MAIL_PORT": 465
 }

@@ -19,7 +19,7 @@ $ docker run \
 -p 5672:5672 \
 rabbitmq:3.9
 
-2. $ mysql -h localhost -P 6603 --protocol=tcp -u root -p
+2. $ mysql -h localhost -P 6603 --protocol=tcp -u root -ppassword123456789-
 Enter password: password123456789-
 mysql> CREATE DATABASE pweb;
 
@@ -31,4 +31,4 @@ RUN SERVER
     v18.1.0
 1. npm install
 2. npm run start_server
-3. npm run sart_alerting_service
+3. npm run start_alerting_service

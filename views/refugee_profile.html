@@ -34,6 +34,7 @@ if (isAuthenticated) {
   document.getElementById('nameTitle').innerHTML = usr.name;   
   document.getElementById('profilePhoto').src = usr.picture;
   var res = await getProfileInfo(auth0, "refugee", usr.email);
+  console.log(res)
   res = res.result.refugee;
   var data = {};
   for (let i = 0; i <= 2; i ++)

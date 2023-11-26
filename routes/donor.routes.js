@@ -21,6 +21,7 @@ module.exports = (app) => {
             return;
         }
         const profile = await donor.getByEmail(req);
+        console.log(profile)
         res.send(profile);
     });
 

@@ -35,6 +35,7 @@ if (isAuthenticated) {
   document.getElementById('nameTitle').innerHTML = usr.name;
   document.getElementById('profilePhoto').src = usr.picture;
   var res = await getProfileInfo(auth0, accType, usr.email);
+  console.log(res)
   res = res.result.donor;
   var data = {};
   for (let i = 0; i <= 2; i ++)

@@ -27,15 +27,15 @@
 
   const isAuthenticated = await auth0.isAuthenticated();
   
+  console.log('bbbbbbbbbbbbbbbbbbbbbbb')
   if (isAuthenticated) {
-
-    
-
+    console.log('aaaaaaaaaaaaaaaaaaaaa')
     const usr = await auth0.getUser();
     console.log(usr);
     accType = usr['http://Donating-App/roles'][0];
     document.getElementById('logoutButton').style.visibility = "visible";
     document.getElementById('homeButton').style.visibility = "visible";
+    console.log('xxxxxxxxxxxxxxxxxxxxxxx')
     document.getElementById('homeLink').href = "/views/" + accType + "/homepage";
     return;
     
@@ -126,7 +126,7 @@
                      <h5 class="title mb-3">Where to contact us:</h5>
                      <div class="row">
                          <div class="col">
-                             <p>Phone number: 07777777
+                             <p>Phone number: +40727855485
                          </div>
                          <div class="col">
                              <p>Email: refugees_help@gmail.com</p>

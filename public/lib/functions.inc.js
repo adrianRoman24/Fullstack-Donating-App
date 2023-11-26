@@ -368,7 +368,8 @@ const formSendUser = async (auth0, data) => {
   }
   };
 
-  const getToken = async (auth0) => { 
+  const getToken = async (auth0) => {
+    console.log('111111111111111111111111111111')
     try {
       const token = await auth0.getTokenSilently();
       const response = await fetch("https://dev-sqqag002.us.auth0.com/oauth/token", {
@@ -394,4 +395,4 @@ const formSendUser = async (auth0, data) => {
       // Display errors in the console
       console.error(e);
     }
-    };
+};

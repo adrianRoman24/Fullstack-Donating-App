@@ -5,7 +5,9 @@ const nodemailer = require('nodemailer');
 async function main() {
     const channel = await initRabbit();
     const transporter = nodemailer.createTransport({
-        service: config.MAIL_SERVICE,
+        host: config.MAIL_HOST,
+        port: config.MAIL_PORT,
+        secure: true,
         auth: {
           user: config.MAIL_USER,
           pass: config.MAIL_PASSWORD,
